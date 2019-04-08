@@ -3,21 +3,21 @@
         <div @mouseout="switchDemoImage(-1)" class="col-md-7 col-sm-10 col-xs-12 d-flex justify-content-center">
 
             <div class="col-xs-3 col-sm-2 col-md-3 col-lg-2 step">
-                <a href="#howtostart" class="howToGallery" id="findVideo" @mouseenter="switchDemoImage(1)">
+                <a href="#how-0" class="howToGallery" id="findVideo" @mouseenter="switchDemoImage(1)">
                     <div class="bg-image bg-contain howToImage main" style="background-image: url('css/find-video-white-resize.png');">
                         <img src="css/find-video-white-resize.png" alt="find video" class="img-responsive howToImage invisible">
                     </div>
                     <p class="hp-subtitle">Find Moment</p></a>
             </div>
             <div class="col-xs-3 col-sm-2 col-md-3 col-lg-2 step">
-                <a href="#howtoedit" class="howToGallery" id="cutVideo" @mouseenter="switchDemoImage(2)">
+                <a href="#how-1" class="howToGallery" id="cutVideo" @mouseenter="switchDemoImage(2)">
                     <div class="bg-image bg-contain howToImage main" style="background-image: url('css/cut-video-image-white.png');">
                         <img src="css/find-video-white-resize.png" alt="cut video" class="img-responsive howToImage invisible" >
                     </div>
                     <p class="hp-subtitle">Cut Video</p></a>
             </div>
             <div class="col-xs-3 col-sm-2 col-md-3 col-lg-2 step">
-                <a href="#howtoshare" class="howToGallery" id="shareVideo"
+                <a href="#how-2" class="howToGallery" id="shareVideo"
                    @mouseenter="switchDemoImage(3)">
                     <div class="bg-image bg-contain howToImage alt" style="background-image: url('css/send-link.png');">
                         <img class="invisible img-responsive howToImage"
@@ -64,9 +64,10 @@
             switchDemoImage: function (videoValue){
                 if (videoValue==-1){
                     document.getElementById("demo-video-img").parentElement.style.display = 'none';
-
+                    document.getElementById("indexIntro").classList.remove('mod');
                 } else {
                     document.getElementById("demo-video-img").parentElement.style.display = '';
+                    document.getElementById("indexIntro").classList.add('mod');
                 }
                 if (videoValue==0){
                     document.getElementById("demo-video-img").src="css/video-demo-transarency-hover.png";
@@ -99,5 +100,20 @@
 </script>
 
 <style scoped>
-
+    .howToGallery:after {
+        margin-top: 21px;
+        position: absolute;
+        left: calc(50% + 6px );
+        transform: translateX(-50%);
+        border-style: solid;
+        border-width: 0 9px 9px 9px;
+        border-color: transparent transparent #fff transparent;
+        /*border-width: 9px 9px 0 9px;*/
+        /*border-color: #fff transparent transparent transparent;*/
+        opacity: 0;
+        content: '';
+    }
+    .howToGallery:hover:after, .howToGallery:focus:after {
+        opacity: 1;
+    }
 </style>

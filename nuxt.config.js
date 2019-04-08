@@ -63,8 +63,8 @@ module.exports = {
             {type: 'text/javascript', src: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'},
             {type: 'text/javascript', src: 'https://apis.google.com/js/client.js'},
             {type: 'text/javascript', src: 'https://content.jwplatform.com/libraries/FxXAImPG.js'},
-            {type: 'text/javascript', src: 'js/nouislider.js'}
-
+            {type: 'text/javascript', src: 'js/nouislider.js'},
+            {type: 'text/javascript', src: 'https://apis.google.com/js/client.js'}
 
         ]
     },

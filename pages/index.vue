@@ -26,6 +26,12 @@
    <!--<div w3-include-html="partials/html/_video-search-listing.html"></div>-->
 
   </div>
+  <div class="video-part vertical-padding-30 start edit" style="overflow-x:hidden; min-height: 50vh;">
+
+   <InputBar></InputBar>
+   <SearchListing></SearchListing>
+
+  </div>
 
   <LandingWhiteBoard></LandingWhiteBoard>
  </div>
@@ -38,6 +44,31 @@ import LandingThreeSteps from "../components/LandingThreeSteps.vue"
 import LandingPageIntro from "../components/LandingPageIntro.vue"
 import LandingWhiteBoard from "../components/LandingWhiteBoard.vue"
 
+import InputBar from "../components/InputBar.vue"
+import SearchListing from "../components/SearchListing.vue"
+
+
+if (process.client) {
+    // (function(document, tag) {
+    //     var scriptTag = document.createElement(tag), // create a script tag
+    //         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
+    //     scriptTag.src = 'partials/js/video-parse-link.js'; // set the source of the script to your script
+    //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+    // }(document, 'script'));
+    // (function(document, tag) {
+    //     var scriptTag = document.createElement(tag), // create a script tag
+    //         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
+    //     scriptTag.src = 'partials/js/jw-player-home-landing.js'; // set the source of the script to your script
+    //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+    // }(document, 'script'));
+    $.getScript('partials/js/video-parse-link.js', function () {
+        console.log('ss scriot');
+    });
+    $.getScript('partials/js/jw-player-home-landing.js', function () {
+        console.log('ss scriot');
+    });
+}
+
 export default {
     layout: 'layout',
     name: 'index',
@@ -45,9 +76,9 @@ export default {
         return {
             title: 'Welcome to Hot Potato',
             link: [
-                {type: 'text/javascript', src: 'partials/js/video-parse-link.js'},
+                //{type: 'text/javascript', src: '/partials/js/video-parse-link.js'},
                 //{type: 'text/javascript', src: 'partials/js/home-landing-toggles.js'},
-                {type: 'text/javascript', src: 'partials/js/multi-edit-functions.js'},
+                {type: 'text/javascript', src: '/partials/js/multi-edit-functions.js'},
                 //{type: 'text/javascript', src: '/partials/js/jw-player-home-landing.js'}
             ]
         }
@@ -55,13 +86,14 @@ export default {
   components: {
       LandingWhiteBoard,
       LandingPageIntro,
-      LandingThreeSteps
+      LandingThreeSteps,
+      InputBar,
+      SearchListing
   },
     mounted: function () {
+
         if (process.client) {
-            $.getScript('partials/js/jw-player-home-landing.js', function () {
-                console.log('ss scriot');
-            });
+
             var url = window.location.toString();
             var value = url.indexOf('localhost');
             console.log('mounted',value, (value<0) );

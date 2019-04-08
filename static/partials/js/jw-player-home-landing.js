@@ -1,5 +1,5 @@
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 var userEditCounter = 0;
@@ -18,27 +18,21 @@ var vidWidth=$("#responsiveVideoFrame").width();
 var vidHeight=(vidWidth*0.5625);
 
 function changeDemoImage (demoImage){
-  if (demoImage==0){
-    document.getElementById("demo-video-img").src="css/video-demo-transarency.png";
-  }else if (demoImage==1){
-    document.getElementById("demo-video-img").src="css/video-demo-transarency-hover.png";
-  }
+    if (demoImage==0){
+        document.getElementById("demo-video-img").src="css/video-demo-transarency.png";
+    }else if (demoImage==1){
+        document.getElementById("demo-video-img").src="css/video-demo-transarency-hover.png";
+    }
 }
-//window.document.onload = function () {
-    var slider = document.getElementById("slider");
-    var sliderDbl = document.getElementById("sliderDbl");
-    slider.style.display = 'none';
-    sliderDbl.style.display = '';
-    noUiSlider.create(sliderDbl, {
-        start: [15,75],
-        connect:true,
-        range: {
-            "min": 0,
-            "max": 100
-        }
-    });
-    console.log(noUiSlider,sliderDbl);
-//}
+
+noUiSlider.create(sliderDbl, {
+    start: [15,75],
+    connect:true,
+    range: {
+        "min": 0,
+        "max": 100
+    }
+});
 
 if ( document.getElementById('videoPlaybackFrame') !== null ) {
 
@@ -78,39 +72,39 @@ if ( document.getElementById('videoPlaybackFrame') !== null ) {
 
 function initiateLiveVideoPlayer(){
     var inputVal = document.getElementById('InputYouTubeLink').value;
-   if (inputVal !== "" && waitForUserSelection==0){
-    getQueryVariable(videoSource);
+    if (inputVal !== "" && waitForUserSelection==0){
+        getQueryVariable(videoSource);
     } else if (inputVal === "" && waitForUserSelection==0) {
-    shortYTLink = "OFu_cHz4_ww";
+        shortYTLink = "OFu_cHz4_ww";
     }
     // if (videoSource === 0 || waitForUserSelection<1){
-  // jwplayer("videoPlaybackFrame").load([{file:inputYTLink}]);
-  // videoLoadSwitch=1;
-  // //document.getElementById('loadVideoButton').style.display ="none";
-  //     if ( document.getElementById("playPauseSpan") !== null ) {
-  //         document.getElementById("playPauseSpan").className = "glyphicon glyphicon-pause";
-  //         document.getElementById('playPauseButton').style.display = "";
-  //     }
-  //
-  // document.getElementById('editVis').style.width ="";
-  // document.getElementById('postOutVis').style.width ="";
-  // document.getElementById('inputRowOne').style.display="none";
-  // document.getElementById('changeVideoButton').style.display="";
-  // document.getElementById('videoInPoint').disabled=false;
-  // document.getElementById('videoTimeline').style.display="";
-  // userEditCounter=0;
-  // jwplayer("videoPlaybackFrame").play();
-      //document.getElementById("originalVideo-to-editor").click();
+    // jwplayer("videoPlaybackFrame").load([{file:inputYTLink}]);
+    // videoLoadSwitch=1;
+    // //document.getElementById('loadVideoButton').style.display ="none";
+    //     if ( document.getElementById("playPauseSpan") !== null ) {
+    //         document.getElementById("playPauseSpan").className = "glyphicon glyphicon-pause";
+    //         document.getElementById('playPauseButton').style.display = "";
+    //     }
+    //
+    // document.getElementById('editVis').style.width ="";
+    // document.getElementById('postOutVis').style.width ="";
+    // document.getElementById('inputRowOne').style.display="none";
+    // document.getElementById('changeVideoButton').style.display="";
+    // document.getElementById('videoInPoint').disabled=false;
+    // document.getElementById('videoTimeline').style.display="";
+    // userEditCounter=0;
+    // jwplayer("videoPlaybackFrame").play();
+    //document.getElementById("originalVideo-to-editor").click();
     //}
 }
 
 function playPauseVideo(){
-jwplayer("videoPlaybackFrame").play();
-if (jwplayer("videoPlaybackFrame").getState()=="PLAYING"){
-  document.getElementById("playPauseSpan").className="glyphicon glyphicon-play";
-} else if (jwplayer("videoPlaybackFrame").getState()=="PAUSED" || jwplayer("videoPlaybackFrame").getState()=="BUFFERING"){
-  document.getElementById("playPauseSpan").className="glyphicon glyphicon-pause";
-}
+    jwplayer("videoPlaybackFrame").play();
+    if (jwplayer("videoPlaybackFrame").getState()=="PLAYING"){
+        document.getElementById("playPauseSpan").className="glyphicon glyphicon-play";
+    } else if (jwplayer("videoPlaybackFrame").getState()=="PAUSED" || jwplayer("videoPlaybackFrame").getState()=="BUFFERING"){
+        document.getElementById("playPauseSpan").className="glyphicon glyphicon-pause";
+    }
 }
 
 function formSubmit(event, el) {

@@ -1,5 +1,6 @@
 <template>
-    <div class="dashboard-part" style="padding-bottom:150px" onmouseenter="switchDemoImage(0);changeDemoImage(0);">
+    <div class="dashboard-part" style="padding-bottom:150px">
+        <!--onmouseenter="switchDemoImage(0);changeDemoImage(0);"-->
 
         <div class="row d-flex justify-content-center" style="">
             <div class="col-md-7 col-sm-10 col-xs-12 d-flex justify-content-center">
