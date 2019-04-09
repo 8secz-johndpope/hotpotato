@@ -10,7 +10,7 @@
                 <img id="demo-video-img" class="img-responsive invisible">
             </div>
             <div class="col-md-6 col-md-offset-3" style="overflow-y: hidden;">
-                <div class="w-100 justify-content-center align-items-center d-flex" style="min-height: 300px; min-height: 35vh;">
+                <div class="w-100 justify-content-center align-items-center d-flex" style="min-height: 350px; min-height: 40vh;">
                     <a href="edit.html"
                        class="btn btn-default bg-dark text-center hp-subtitle hp-transition">
                         Try it Now!
@@ -24,6 +24,11 @@
             </div>
         </div>
     </div>
+        <div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">
+            <div class="col-12 col-sm-10 col-lg-6 ">
+                <progress-bar></progress-bar>
+            </div>
+        </div>
 
     <div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">
         <div class="col-12 col-sm-10 col-lg-6">
@@ -82,7 +87,6 @@
             </div>
         </div>
     </div>
-
     <div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">
         <div class="col-12 col-sm-10 col-lg-6 ">
             <div id="howto-2" index="2" class="row d-flex step"
@@ -134,7 +138,10 @@
 </template>
 
 <script>
+    import ProgressBar from "./ProgressBar.vue"
+
     export default {
+        components: {ProgressBar},
         name: "landing-page-intro",
         data() {
             return {
@@ -211,17 +218,22 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .bg-image {
         background-position: center bottom;
     }
-    #indexIntro.mod .inner:before {
-        /*background: #4c453b;*/
-        opacity: 0.65;
-    }
-    #indexIntro.mod .hp-subtitle {
-        opacity: 0;
-        pointer-events: none;
+    #indexIntro.mod {
+        overflow-y: hidden;
+        background: rgba(255,255,255,0.95);
+        .inner:before {
+            /*background: #4c453b;*/
+            /*opacity: 0;*/
+            opacity: 0.35;
+        }
+        .hp-subtitle {
+            opacity: 0;
+            pointer-events: none;
+        }
     }
 
     @media (min-width: 768px) {

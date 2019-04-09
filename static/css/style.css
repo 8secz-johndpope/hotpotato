@@ -214,7 +214,7 @@ a.howToGallery {
 #indexIntro .inner:before {
 	/*background: url(sergeiEisenstein-05pct.png) no-repeat fixed 50% 5%;*/
 	background: url(../images/people-looking-at-phone-50perc.png) no-repeat fixed 50% 5%;
-	background-size: 99%;
+	background-size: 100%;
 	content: '';
 	position: absolute;
 	left: 0;
