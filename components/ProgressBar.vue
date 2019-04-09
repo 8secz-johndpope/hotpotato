@@ -79,11 +79,14 @@
         width: 45px;
         position: absolute;
         overflow: hidden;
-        right: -45px;
-        right: -38.4px;
+        //right: -45px;
+        right: -38.25px;
         z-index: 1;
-        top: -2.75px;
+        top: -2.5px;
         transform: scaleX(0.70);
+        //height:50px;
+        //width:50px;
+        //transform: scale(0.70,1.3);
 
         &:after {
             height:100%;

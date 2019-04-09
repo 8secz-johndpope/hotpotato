@@ -484,10 +484,11 @@ body #sliderDbl .noUi-target:before {
 	display: none;
 }
 
-i.fa {
+i.fa, .fas, .far {
 	top: 1px;
 	position: relative;
 }
+
 
 div[text-align:right;position:fixed;z-index:9999999;bottom: 0;width: 100%;cursor:pointer;line-height:0;display:block !important;] {
 	opacity: 0 !important;
