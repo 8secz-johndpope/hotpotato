@@ -13,7 +13,7 @@
    <!--<LandingThreeSteps class="vertical-padding-30"></LandingThreeSteps>-->
   </div>
   <div class="video-part" style="overflow-x:hidden;">
-   <LandingPageIntro></LandingPageIntro>
+      <LandingPageIntro cta="true" walkthrough="false"></LandingPageIntro>
    <div class="vertical-padding-45">
     <h2 class=" padding-bottom-15 text-center">Walkthrough Tutorial</h2>
      <div class="vertical-padding-15 text-center hp-subtitle">
@@ -43,6 +43,9 @@
   </div>
 
   <LandingWhiteBoard></LandingWhiteBoard>
+     <div class="video-part">
+         <LandingPageIntro :cta="false" walkthrough="true"></LandingPageIntro>
+     </div>
  </div>
 </template>
 
@@ -71,15 +74,7 @@ if (process.client) {
     //     scriptTag.src = 'partials/js/jw-player-home-landing.js'; // set the source of the script to your script
     //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
     // }(document, 'script'));
-    $.getScript('partials/js/video-parse-link.js', function () {
-        console.log('ss scriot');
-        setTimeout(function () {
-            checkAuth();
-        },700);
-    });
-    $.getScript('partials/js/jw-player-home-landing.js', function () {
-        console.log('ss scriot');
-    });
+
 }
 
 export default {
@@ -124,6 +119,26 @@ export default {
     mounted: function () {
 
         if (process.client) {
+            $.getScript('partials/js/video-parse-link.js', function () {
+                console.log('ss scriot');
+                setTimeout(function () {
+                    checkAuth();
+                },700);
+            });
+
+            $.getScript('partials/js/jw-player-home-landing.js', function () {
+                console.log('ss scriot');
+                // var sliderDbl = document.getElementById("sliderDbl");
+                // noUiSlider.create(sliderDbl, {
+                //     start: [null,100],
+                //     connect:true,
+                //     range: {
+                //         "min": 0,
+                //         "max": 100
+                //     }
+                // });
+            });
+
             var url = window.location.toString();
             var value = url.indexOf('localhost');
             console.log('mounted',value, (value<0) );

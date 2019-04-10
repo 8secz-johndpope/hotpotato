@@ -33,9 +33,9 @@
                 } else {
                     scriptName = 'edit';
                 }
-                $.getScript('/js/header.js', function () {
-                    console.log('ss scriot');
-                });
+                // $.getScript('/js/header.js', function () {
+                //     console.log('ss scriot');
+                // });
             },
         }
     }

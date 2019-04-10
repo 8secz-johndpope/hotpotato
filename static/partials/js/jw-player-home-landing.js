@@ -25,14 +25,6 @@ function changeDemoImage (demoImage){
     }
 }
 
-noUiSlider.create(sliderDbl, {
-    start: [15,75],
-    connect:true,
-    range: {
-        "min": 0,
-        "max": 100
-    }
-});
 
 if ( document.getElementById('videoPlaybackFrame') !== null ) {
 

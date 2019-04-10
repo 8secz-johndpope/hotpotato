@@ -1,6 +1,7 @@
 <template>
     <div class="">
-    <div class="row hp-transition position-relative" id="indexIntro">
+    <div class="row hp-transition position-relative" id="indexIntro"
+         v-if="(cta === true || cta === 'true' )">
         <div class="col-md-12 inner hp-transition">
             <!--<div class="col-md-6 col-md-offset-3" >-->
                 <!--<div id="video-title" style="text-align:center">-->
@@ -30,7 +31,8 @@
             <!--</div>-->
         <!--</div>-->
 
-    <div class="hidden row padding-top-45 padding-bottom-15 justify-content-center d-flex">
+    <div class=" row padding-top-45 padding-bottom-15 justify-content-center d-flex"
+         v-if="(walkthrough === true || walkthrough === 'true' )">
         <div class="col-12 col-sm-10 col-lg-6">
             <div id="howto-0" index="0" class="row d-flex step"
                  @mouseenter="stateChange($event,1)"
@@ -46,7 +48,8 @@
             </div>
         </div>
     </div>
-    <div class="hidden vertical-padding-15">
+    <div class=" vertical-padding-15"
+         v-if="(walkthrough === true || walkthrough === 'true' )">
         <div class="row justify-content-center d-flex">
             <div class="col-12 col-sm-10 col-lg-6">
                 <div id="howto-1" index="1" class="row d-flex step"
@@ -87,7 +90,8 @@
             </div>
         </div>
     </div>
-    <div class="hidden row padding-top-45 padding-bottom-15 justify-content-center d-flex">
+    <div class=" row padding-top-45 padding-bottom-15 justify-content-center d-flex"
+         v-if="(walkthrough === true || walkthrough === 'true' )">
         <div class="col-12 col-sm-10 col-lg-6 ">
             <div id="howto-2" index="2" class="row d-flex step"
                  @mouseenter="stateChange($event,1)" @click="stateChange($event,2)"
@@ -138,10 +142,12 @@
 </template>
 
 <script>
+    //import 'nouislider'
     import ProgressBar from "./ProgressBar.vue"
 
     export default {
         components: {ProgressBar},
+        props: ['cta','walkthrough'],
         name: "landing-page-intro",
         data() {
             return {
@@ -167,6 +173,21 @@
                         toggle: 0
                     }
                 ]
+            }
+        },
+        mounted: function () {
+            //console.log('cta', (this.cta === 1 ) );
+            if ( this.walkthrough === true || this.walkthrough === 'true' ) {
+                console.log('noUiSlider', noUiSlider);
+                var sliderDbl = document.getElementById('sliderDbl');
+                noUiSlider.create(sliderDbl, {
+                    start: [15,75],
+                    connect:true,
+                    range: {
+                        "min": 0,
+                        "max": 100
+                    }
+                });
             }
         },
         methods: {
