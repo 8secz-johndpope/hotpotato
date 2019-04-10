@@ -10,7 +10,7 @@
                 <img id="demo-video-img" class="img-responsive invisible">
             </div>
             <div class="col-md-6 col-md-offset-3" style="overflow-y: hidden;">
-                <div class="w-100 justify-content-center align-items-center d-flex" style="min-height: 350px; min-height: 40vh;">
+                <div class="w-100 justify-content-center align-items-center d-flex" style="min-height: 300px; min-height: 35vh;">
                     <a href="edit.html"
                        class="btn btn-default bg-dark text-center hp-subtitle hp-transition">
                         Try it Now!
@@ -24,13 +24,13 @@
             </div>
         </div>
     </div>
-        <div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">
-            <div class="col-12 col-sm-10 col-lg-6 ">
-                <progress-bar></progress-bar>
-            </div>
-        </div>
+        <!--<div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">-->
+            <!--<div class="col-12 col-sm-10 col-lg-6 ">-->
+                <!--<progress-bar></progress-bar>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    <div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">
+    <div class="hidden row padding-top-45 padding-bottom-15 justify-content-center d-flex">
         <div class="col-12 col-sm-10 col-lg-6">
             <div id="howto-0" index="0" class="row d-flex step"
                  @mouseenter="stateChange($event,1)"
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="vertical-padding-15">
+    <div class="hidden vertical-padding-15">
         <div class="row justify-content-center d-flex">
             <div class="col-12 col-sm-10 col-lg-6">
                 <div id="howto-1" index="1" class="row d-flex step"
@@ -87,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="row padding-top-45 padding-bottom-15 justify-content-center d-flex">
+    <div class="hidden row padding-top-45 padding-bottom-15 justify-content-center d-flex">
         <div class="col-12 col-sm-10 col-lg-6 ">
             <div id="howto-2" index="2" class="row d-flex step"
                  @mouseenter="stateChange($event,1)" @click="stateChange($event,2)"
@@ -228,7 +228,7 @@
         .inner:before {
             /*background: #4c453b;*/
             /*opacity: 0;*/
-            opacity: 0.35;
+            opacity: 0.25;
         }
         .hp-subtitle {
             opacity: 0;
@@ -238,7 +238,7 @@
 
     @media (min-width: 768px) {
         .image-overlay {
-            background-size: 76%;
+            background-size: 56%;
             left: -17px;
         }
     }

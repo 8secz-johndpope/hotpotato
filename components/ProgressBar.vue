@@ -4,9 +4,9 @@
             <a @click="goTo(item, $event)" v-for="item in barList"
             class="d-flex btn btn-default bg-dark hp-subtitle"
             :class="( (progress+1) > item.index ) ? 'active': ''">
-                <span class="d-flex horizontal-margin-5 ">{{item.name}}</span>
                 <i :class="item.icon"
                    class="d-flex horizontal-margin-5 "></i>
+                <span class="d-flex horizontal-margin-5 ">{{item.name}}</span>
                 <div class="triangle-right">
                 </div>
             </a>
@@ -40,7 +40,7 @@
                         icon: 'fas fa-envelope'
                     }
                 ],
-                progress: 1
+                progress: 0
             }
         },
         methods: {
@@ -48,12 +48,20 @@
                 Cookies.set('progress',item.index);
                 this.progress = item.index;
             }
+        },
+        watch: {
+            '$parent.progress': function(value) {
+                this.progress = value;
+            }
         }
     }
 </script>
 
 <style scoped lang="scss">
     .progress-bar {
+        .fas {
+            top: 3px;
+        }
         a {
             margin-right: 0;
             padding: 20px 35px;
@@ -61,6 +69,7 @@
             position: relative;
             box-shadow: unset;
             border-right: 0;
+            border-left: 0;
             &.active {
                 .triangle-right:after {
                     background: white;
@@ -89,6 +98,7 @@
         //transform: scale(0.70,1.3);
 
         &:after {
+            background: #4c453b;
             height:100%;
             width:100%;
             position:relative;
@@ -99,7 +109,7 @@
             display:block;
             //position:absolute;
             left:-75%;
-            top: 5px;
+            top: 6px;
             border: 1px solid #ccc;
             background-size:cover;
             -webkit-transition: opacity .35s ease,color .35s ease,background-image .35s ease,background-color .35s ease,background .35s ease,border-color .35s ease,top .25s ease,-webkit-box-shadow .35s ease;

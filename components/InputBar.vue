@@ -1,6 +1,7 @@
 <template>
-    <div class="row d-flex justify-content-center"
-         style="padding-top:20px;padding-bottom:15px" id="videoPlayerButtons">
+    <div class="row d-flex justify-content-center vertical-padding-15"
+         style="" id="videoPlayerButtons"
+         :class="(enable !== undefined && enable === false) ? 'disabled dark' : ''">
         <div class="col-xs-12 col-md-7 d-flex justify-content-center" id="inputRowOne">
             <div class="col-sm-2 col-xs-3 source-button-col hidden">
                 <div class="btn-group">
@@ -51,6 +52,7 @@
 <script>
     export default {
         name: "inputbar",
+        props: ['enable'],
         mounted: function () {
 
             if (process.client) {
@@ -60,8 +62,13 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     #videoPlayerButtons {
         z-index: 1;
+    }
+    .disabled {
+        a, input, button {
+            pointer-events: none;
+        }
     }
 </style>

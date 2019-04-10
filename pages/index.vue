@@ -1,22 +1,37 @@
 <template>
  <div>
   <div class="video-part">
-   <div class="padding-top-30 d-flex align-items-center justify-content-center" style="min-height: 20vh;">
-    <div class="text-center">
+   <div class="vertical-padding-45 d-flex align-items-center justify-content-center" style="min-height: 20vh;">
+    <div class="text-center ">
      <!--<h4 class="">HOT POTATO</h4>-->
      <img src="css/hot-potato-white-text-with-logo.png" class="whiteImage vertical-margin-15" alt="Hot Potato"
           style="width: 225px; margin: 15px auto;">
-     <h4 class="text-uppercase hp-subtitle">Simple & fast video editing</h4>
-     <h2 class="">Post, share, manage videos online</h2>
+     <h4 class="text-uppercase hp-subtitle vertical-padding-10">Simple & fast</h4>
+     <h2 class="vertical-padding-10">Edit, download, and repost existing online videos</h2>
     </div>
    </div>
-   <LandingThreeSteps class="vertical-padding-30"></LandingThreeSteps>
+   <!--<LandingThreeSteps class="vertical-padding-30"></LandingThreeSteps>-->
   </div>
   <div class="video-part" style="overflow-x:hidden;">
-
    <LandingPageIntro></LandingPageIntro>
+   <div class="vertical-padding-45">
+    <h2 class=" padding-bottom-15 text-center">Walkthrough Tutorial</h2>
+     <div class="vertical-padding-15 text-center hp-subtitle">
+      <span v-html="walkthroughText[step]"></span>
+      <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-warning" @click="step++">
+       <span>next</span>
+       <i class="fas fa-chevron-right"></i>
+      </a>
+     </div>
+      <div class="padding-top-30 start">
+       <InputBar v-if="step < 3" :enable="false"></InputBar>
+       <SearchListing v-if="step < 2"></SearchListing>
+      </div>
+      <progress-bar class="disabled padding-top-30"></progress-bar>
+    </div>
   </div>
   <div class="video-part vertical-padding-15 start" style="overflow-x: unset;">
+
    <div class="vertical-padding-15 d-flex justify-content-center">
     <div class=" col-10 col-sm-8 col-md-5 d-flex">
      <a href="edit.html" class="w-100 btn btn-default bg-dark text-center hp-subtitle">Try it Now!</a>
@@ -24,12 +39,6 @@
    </div>
    <!--<div w3-include-html="partials/html/_inputbar.html"></div>-->
    <!--<div w3-include-html="partials/html/_video-search-listing.html"></div>-->
-
-  </div>
-  <div class="video-part vertical-padding-30 start edit" style="overflow-x:hidden; min-height: 50vh;">
-
-   <InputBar></InputBar>
-   <SearchListing></SearchListing>
 
   </div>
 
@@ -46,6 +55,7 @@ import LandingWhiteBoard from "../components/LandingWhiteBoard.vue"
 
 import InputBar from "../components/InputBar.vue"
 import SearchListing from "../components/SearchListing.vue"
+import ProgressBar from "../components/ProgressBar.vue"
 
 
 if (process.client) {
@@ -63,6 +73,9 @@ if (process.client) {
     // }(document, 'script'));
     $.getScript('partials/js/video-parse-link.js', function () {
         console.log('ss scriot');
+        setTimeout(function () {
+            checkAuth();
+        },700);
     });
     $.getScript('partials/js/jw-player-home-landing.js', function () {
         console.log('ss scriot');
@@ -72,6 +85,31 @@ if (process.client) {
 export default {
     layout: 'layout',
     name: 'index',
+    components: {
+        LandingWhiteBoard,
+        LandingPageIntro,
+        LandingThreeSteps,
+        InputBar,
+        SearchListing,
+        ProgressBar
+    },
+    data () {
+      return {
+          step: 0,
+          progress: 0,
+          walkthroughText: [
+              'Click Next to start the walkthrough tutorial',
+              'Start by search for a video',
+              'Or enter a video link',
+              "Drag the slider's first toggle to where you want your clip to start",
+              "Click add another edit if you want more than one clip in your video edit",
+              'Drag the second toggle to where you want the clip to end',
+              'Click an export button, or the enter key to finalize your edit',
+              'Copy the link to share your video edit',
+              'You can save the video file by download'
+          ]
+      }
+    },
     head() {
         return {
             title: 'Welcome to Hot Potato',
@@ -83,17 +121,9 @@ export default {
             ]
         }
     },
-  components: {
-      LandingWhiteBoard,
-      LandingPageIntro,
-      LandingThreeSteps,
-      InputBar,
-      SearchListing
-  },
     mounted: function () {
 
         if (process.client) {
-
             var url = window.location.toString();
             var value = url.indexOf('localhost');
             console.log('mounted',value, (value<0) );
@@ -107,6 +137,20 @@ export default {
                 document.getElementById('outputLoadingBar').style.display ="";
                 $("form").slideDown();
 
+            }
+        }
+    },
+    watch: {
+        'step': function (value) {
+            if (value === 1) {
+                document.getElementById('InputYouTubeLink').value = 'Elon Musk';
+                videoSource = 1;
+                waitForUserSelection=1;
+                getYouTubeVideoSearchData();
+            } else if (value === 2) {
+                document.getElementById('InputYouTubeLink').value = 'https://www.youtube.com/watch?v=ycPr5-27vSI';
+            } else if ( value === 3) {
+                this.progress = 1;
             }
         }
     }

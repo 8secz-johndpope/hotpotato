@@ -138,6 +138,7 @@ function turnYouTubeDataIntoPresentableInformation() {
             query[i].split("videoId");
             videoLinkArray[i] = query[i].substr(3,11);
             document.getElementById("videoThumbnail"+(i-1)).src=("https://i.ytimg.com/vi/"+videoLinkArray[i]+"/mqdefault.jpg");
+            document.getElementById("videoThumbnail"+(i-1)).parentElement.style.backgroundImage="url(https://i.ytimg.com/vi/"+videoLinkArray[i]+"/mqdefault.jpg)";
 
             queryTitle[i].split("title");
             queryTitle[i] = queryTitle[i].substr(3,65);
