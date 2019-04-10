@@ -31,7 +31,7 @@
             <!--</div>-->
         <!--</div>-->
 
-    <div class=" row padding-top-45 padding-bottom-15 justify-content-center d-flex"
+    <div class=" row padding-top-60 padding-bottom-15 justify-content-center d-flex"
          v-if="(walkthrough === true || walkthrough === 'true' )">
         <div class="col-12 col-sm-10 col-lg-6">
             <div id="howto-0" index="0" class="row d-flex step"
@@ -59,10 +59,7 @@
                         <h4 class="d-flex">Drag or click start edit points</h4>
                     </div>
                     <div class="w-100">
-                        <div class="progress vertical-padding-10" id="videoTimeline" style="">
-                            <div id="slider" style="display:none;"></div>
-                            <div id="sliderDbl"></div>
-                        </div>
+                        <slider></slider>
                         <div class="vertical-padding-10">
                             <button type="button" class="btn btn-default bg-dark" id="videoInPoint"
                                     @click="stateChange(1,1)"
@@ -76,7 +73,7 @@
                             </button>
                             <button type="button"
                                     class="btn btn-default bg-dark" id="videoOutPoint"
-                                     @click="stateChange(1,2)"
+                                     @click="stateChange(1,2)" @mouseenter="stateChange(1,2)"
                                     data-toggle="tooltip"
                                     data-placement="top" data-delay="400" title="End your edit"
                                     style="">
@@ -90,21 +87,21 @@
             </div>
         </div>
     </div>
-    <div class=" row padding-top-45 padding-bottom-15 justify-content-center d-flex"
+    <div class=" row padding-top-30 padding-bottom-30 justify-content-center d-flex"
          v-if="(walkthrough === true || walkthrough === 'true' )">
         <div class="col-12 col-sm-10 col-lg-6 ">
             <div id="howto-2" index="2" class="row d-flex step"
                  @mouseenter="stateChange($event,1)" @click="stateChange($event,2)"
                  @mouseleave="stateChange($event,0)">
                 <div class="col-12 col-sm-6 col-md-5 d-flex align-items-center">
-                    <h4 class="horizontal-padding-15">Create Link</h4>
+                    <h4 class="horizontal-padding-15">Export Edit</h4>
                 </div>
                 <div class="w-100">
                     <button type="button" class="btn btn-default bg-dark" id="submitEdit"
                             onclick="submitEdit();" data-toggle="tooltip" data-placement="top"
                             data-delay="450" title="Creates a web link of the video edit">
                         <span class="glyphicon glyphicon-film" aria-hidden="true"> </span>
-                        <span style="padding-left: 5px;"> CREATE</span>
+                        <span style="padding-left: 5px;"> EXPORT</span>
                     </button>
                 </div>
             </div>
@@ -120,7 +117,7 @@
                            value="">
                 </div>
             </div>
-            <div id="howto-4" index="3" class="row d-flex padding-top-15"
+            <div id="howto-4" index="3" class="row d-flex vertical-padding-30"
                  @mouseenter="stateChange($event,1)" @click="stateChange($event,2)"
                  @mouseleave="stateChange($event,0)" style="opacity: 0">
                 <div class="col-12 col-sm-6 col-md-5">
@@ -144,9 +141,13 @@
 <script>
     //import 'nouislider'
     import ProgressBar from "./ProgressBar.vue"
+    import slider from "./slider.vue"
 
     export default {
-        components: {ProgressBar},
+        components: {
+            ProgressBar,
+            slider
+        },
         props: ['cta','walkthrough'],
         name: "landing-page-intro",
         data() {
@@ -179,15 +180,6 @@
             //console.log('cta', (this.cta === 1 ) );
             if ( this.walkthrough === true || this.walkthrough === 'true' ) {
                 console.log('noUiSlider', noUiSlider);
-                var sliderDbl = document.getElementById('sliderDbl');
-                noUiSlider.create(sliderDbl, {
-                    start: [15,75],
-                    connect:true,
-                    range: {
-                        "min": 0,
-                        "max": 100
-                    }
-                });
             }
         },
         methods: {
@@ -204,6 +196,7 @@
                 this.toggles[index].toggle = type;
                 if ( index === 1 ) {
                     var sliderDbl = document.getElementById('sliderDbl');
+                    console.log('type',type);
                     if ( type === 1 ) {
                         sliderDbl.noUiSlider.set([30,100]);
                     } else if ( type === 2 ) {
@@ -268,5 +261,8 @@
             left: 0;
             background-size: cover;
         }
+    }
+    #videoTimeline {
+        box-shadow: none;
     }
 </style>

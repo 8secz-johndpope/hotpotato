@@ -17,10 +17,14 @@
    <div class="vertical-padding-45">
     <h2 class=" padding-bottom-15 text-center">Walkthrough Tutorial</h2>
      <div class="vertical-padding-15 text-center hp-subtitle">
+      <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
+       <i class="fas fa-chevron-left"></i>
+       <span class="padding-left-5">PREVIOUS</span>
+      </a>
       <span v-html="walkthroughText[step]"></span>
       <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-warning" @click="step++">
-       <span>next</span>
-       <i class="fas fa-chevron-right"></i>
+       <span>NEXT</span>
+       <i class="fas fa-chevron-right padding-left-5"></i>
       </a>
      </div>
       <div class="padding-top-30 start">
@@ -158,12 +162,22 @@ export default {
     watch: {
         'step': function (value) {
             if (value === 1) {
-                document.getElementById('InputYouTubeLink').value = 'Elon Musk';
-                videoSource = 1;
-                waitForUserSelection=1;
-                getYouTubeVideoSearchData();
+                setTimeout(function () {
+                    document.getElementById('InputYouTubeLink').value = 'Elon';
+                },250);
+                setTimeout(function () {
+                    document.getElementById('InputYouTubeLink').value = 'Elon Musk';
+                    videoSource = 1;
+                    waitForUserSelection = 1;
+                    getYouTubeVideoSearchData();
+                },500);
             } else if (value === 2) {
-                document.getElementById('InputYouTubeLink').value = 'https://www.youtube.com/watch?v=ycPr5-27vSI';
+                setTimeout(function () {
+                    document.getElementById('InputYouTubeLink').value = 'youtube.com';
+                },650);
+                setTimeout(function () {
+                    document.getElementById('InputYouTubeLink').value = 'youtube.com/watch?v=ycPr5-27vSI';
+                },1200);
             } else if ( value === 3) {
                 this.progress = 1;
             }

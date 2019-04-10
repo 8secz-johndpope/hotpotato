@@ -403,10 +403,7 @@ body .noUi-target {
 	/*margin-right: -14px;*/
 }
 
-/*body #sliderDbl .noUi-target:before {*/
-	/*background: #FAFAFA;*/
-/*}*/
-body .noUi-target:before {
+body .progress .noUi-target:before {
 	content: '';
 	height: 5px;
 	width: 100%;
@@ -415,16 +412,16 @@ body .noUi-target:before {
 	position: absolute;
 	background: #FAFAFA;
 }
-body #slider.noUi-target:before {
+body .progress #slider.noUi-target:before {
 	background: #3FB8AF;
 }
-body .noUi-origin {
+body .progress .noUi-origin {
 	border-radius: 0;
 	/*background: transparent;*/
 	background-color: unset;
 	box-shadow: none !important;
 }
-body .noUi-origin:before {
+body .progress .noUi-origin:before {
 	content: '';
 	height: 5px;
 	width: 100%;
@@ -433,10 +430,11 @@ body .noUi-origin:before {
 	position: absolute;
 	background: #FAFAFA;
 }
-body .noUi-origin.noUi-connect:before {
+
+body .progress .noUi-origin.noUi-connect:before {
 	background-color: #ec971f;
 }
-body #sliderDbl .noUi-target:before {
+body .progress #sliderDbl .noUi-target:before {
 	background-color: #FAFAFA;
 }
 #videoTimeline {
@@ -484,7 +482,7 @@ body #sliderDbl .noUi-target:before {
 	display: none;
 }
 
-i.fa, .fas, .far {
+i.fa {
 	top: 1px;
 	position: relative;
 }
