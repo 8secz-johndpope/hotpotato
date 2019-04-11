@@ -482,9 +482,12 @@ body .progress #sliderDbl .noUi-target:before {
 	display: none;
 }
 
-i.fa {
+.fa, .far, .fas {
 	top: 1px;
 	position: relative;
+}
+.fa.mod, .far.mod, .fas.mod {
+	top: unset;
 }
 
 .disabled {

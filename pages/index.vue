@@ -14,22 +14,36 @@
   </div>
   <div class="video-part" style="overflow-x:hidden;">
       <LandingPageIntro cta="true" walkthrough="false"></LandingPageIntro>
-   <div class="vertical-padding-45">
+   <div class=" vertical-padding-45">
+    <div class="row d-flex justify-content-center d-flex ">
+    <div class=" col-xs-12 col-md-6 ">
     <h2 class=" padding-bottom-15 text-center">Walkthrough Tutorial</h2>
-     <div class="vertical-padding-15 text-center hp-subtitle">
+     <div class="d-flex vertical-padding-15 text-center hp-subtitle">
       <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
-       <i class="fas fa-chevron-left"></i>
+       <i class="fas mod fa-chevron-left"></i>
        <span class="padding-left-5">PREVIOUS</span>
       </a>
-      <span v-html="walkthroughText[step]"></span>
+      <span class="d-flex flex-fill justify-content-center" v-html="walkthroughText[step]"></span>
       <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-warning" @click="step++">
        <span>NEXT</span>
-       <i class="fas fa-chevron-right padding-left-5"></i>
+       <i class="fas mod fa-chevron-right padding-left-5"></i>
       </a>
      </div>
+     </div>
+     </div>
       <div class="padding-top-30 start">
-       <InputBar v-if="step < 3" :enable="false"></InputBar>
+       <InputBar :class="( step < 3 ) ? '' : 'hidden'" :enable="false"></InputBar>
        <SearchListing v-if="step < 2"></SearchListing>
+       <div class="d-flex justify-content-center">
+        <slider v-if="step > 2 && step < 5"
+        class="col-xs-12 col-md-6 "></slider>
+        <button id="addEdit" type="button" class="btn btn-default bg-dark"
+        v-if="step === 5">
+         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+         <span> ADD ANOTHER CUT</span>
+        </button>
+        <VideoPlayerAndSidebar v-if="step > 5"></VideoPlayerAndSidebar>
+       </div>
       </div>
       <progress-bar class="disabled padding-top-30"></progress-bar>
     </div>
@@ -63,7 +77,8 @@ import LandingWhiteBoard from "../components/LandingWhiteBoard.vue"
 import InputBar from "../components/InputBar.vue"
 import SearchListing from "../components/SearchListing.vue"
 import ProgressBar from "../components/ProgressBar.vue"
-
+import slider from "../components/slider.vue"
+import VideoPlayerAndSidebar from "../components/VideoPlayerAndSidebar.vue"
 
 if (process.client) {
     // (function(document, tag) {
@@ -90,7 +105,9 @@ export default {
         LandingThreeSteps,
         InputBar,
         SearchListing,
-        ProgressBar
+        ProgressBar,
+        slider,
+        VideoPlayerAndSidebar
     },
     data () {
       return {
@@ -101,8 +118,8 @@ export default {
               'Start by search for a video',
               'Or enter a video link',
               "Drag the slider's first toggle to where you want your clip to start",
-              "Click add another edit if you want more than one clip in your video edit",
               'Drag the second toggle to where you want the clip to end',
+              "Click add another edit if you want more than one clip in your video edit",
               'Click an export button, or the enter key to finalize your edit',
               'Copy the link to share your video edit',
               'You can save the video file by download'
@@ -161,6 +178,7 @@ export default {
     },
     watch: {
         'step': function (value) {
+            //var sliderDbl = document.getElementById('sliderDbl');
             if (value === 1) {
                 setTimeout(function () {
                     document.getElementById('InputYouTubeLink').value = 'Elon';
@@ -180,6 +198,43 @@ export default {
                 },1200);
             } else if ( value === 3) {
                 this.progress = 1;
+                setTimeout(function () {
+                    var sliderDbl = document.getElementById('sliderDbl');
+                    sliderDbl.noUiSlider.set([30,null]);
+                },450);
+            } else if ( value === 4) {
+                //this.progress = 1;
+                setTimeout(function () {
+                    var sliderDbl = document.getElementById('sliderDbl');
+                    sliderDbl.noUiSlider.set([null,70]);
+                },270);
+            } else if ( value === 5) {
+                setTimeout(function () {
+                    var slider = document.getElementById('slider');
+                    slider.style.display = '';
+                    //sliderDbl.noUiSlider.set([30,null]);
+                },450);
+            } else if ( value === 6 ) {
+                var vidLink = 'https://youtube.com/watch?v=ycPr5-27vSI';
+                document.getElementById('InputYouTubeLink').value = 'https://youtube.com/watch?v=ycPr5-27vSI';
+                document.getElementById('ytVidCode').value = 'ycPr5-27vSI';
+                (function(document, tag) {
+                    var scriptTag = document.createElement(tag), // create a script tag
+                        firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
+                    scriptTag.src = 'partials/js/jw-player-and-slider.js'; // set the source of the script to your script
+                    firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+                }(document, 'script'));
+
+                //setTimeout(function () {
+                //     $.getScript('partials/js/jw-player-and-slider.js', function () {
+                //         console.log('ss scriot');
+                //     });
+                //});
+                setTimeout(function () {
+                    //var slider = document.getElementById('slider');
+                    //slider.style.display = '';
+                    //sliderDbl.noUiSlider.set([30,null]);
+                },450);
             }
         }
     }

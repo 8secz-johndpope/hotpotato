@@ -25,7 +25,7 @@
                 <div class ="embed-responsive embed-responsive-16by9" id="responsiveVideoFrame">
                     <div id="videoPlaybackFrame"></div></div>
 
-                <div class="progress" id="videoTimeline" style="">
+                <div class="slider-area" id="videoTimeline" style="">
                     <div id="sliderDbl" style="display:none;"></div>
                     <div id="slider"></div>
                     <!-- <div class="progress-bar progress-bar-info" id="preInVis" role="progressbar" style="">

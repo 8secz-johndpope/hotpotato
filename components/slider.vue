@@ -84,7 +84,7 @@
             position: absolute;
         }
     }
-    body #sliderDbl .noUi-target {
-
+    .noUi-target {
+        height: 50px;
     }
 </style>

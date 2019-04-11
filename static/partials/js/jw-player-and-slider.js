@@ -22,6 +22,9 @@ sliderDbl.style.display = '';
 //var inputYTLink = "https://www.youtube.com/watch?v=yJDRop2ocFo";
 var vidWidth=$("#responsiveVideoFrame").width();
 var vidHeight=(vidWidth*0.5625);
+if ( typeof vidLink === 'undefined' ) {
+    vidLink = document.getElementById('InputYouTubeLink').value;
+}
 var shortYTLink = inputYTLink=vidLink;
 var tempOutputYoutubeLink;
 var valueStart = document.getElementById("value-start");
@@ -51,7 +54,7 @@ var handleVal;
 // When the slider value changes, update the input and span
 slider.noUiSlider.on("change", function( values, handle ) {
     var userEditCounterOld = userEditCounter;
-    userEditCounter=-1;
+    //userEditCounter=-1;
 
     handleVal = values[handle];
     sliderVal = (values[handle]/100)*vidDuration;
@@ -71,9 +74,9 @@ slider.noUiSlider.on("change", function( values, handle ) {
     } else {
         valueStart.value = values[handle];
     }
-    setTimeout(function(){
-        userEditCounter = userEditCounterOld;
-    },200);
+    // setTimeout(function(){
+    //   userEditCounter = userEditCounterOld;
+    // },200);
 });
 slider.noUiSlider.on("start", function( values, handle ) {
     userEditCounter=-1;
@@ -83,7 +86,7 @@ sliderDbl.noUiSlider.on("start", function( values, handle ) {
 });
 sliderDbl.noUiSlider.on("change", function( values, handle ) {
     var userEditCounterOld = userEditCounter;
-    userEditCounter=-1;
+    //userEditCounter=-1;
     sliderVal = (values[handle]/100)*vidDuration;
     jwplayer("videoPlaybackFrame").seek(sliderVal);
     if ( handle ) {
@@ -100,10 +103,12 @@ sliderDbl.noUiSlider.on("change", function( values, handle ) {
         videoInPoint('slider',inPoint[currentCut]);
         //});
     }
-    setTimeout(function(){
-        myTimer();
-    },200);
-    function myTimer() {  userEditCounter = userEditCounterOld;  }
+    // setTimeout(function(){
+    //     myTimer();
+    // },200);
+    // function myTimer() {
+    //     userEditCounter = userEditCounterOld;
+    // }
 });
 
 
@@ -191,44 +196,33 @@ function videoInPoint(type, val){
     inPoint[currentCut] = jwplayer("videoPlaybackFrame").getPosition();
     if (typeof type !== 'undefined' && type === 'slider') {
         inPoint[currentCut] = val;
+        userEditCounter = 0;
     } else {
         userEditCounter = 1;
         videoLoadSwitch=1;
         $("#slider").hide();
+        document.getElementById("videoInPoint").lastElementChild.innerHTML="CUT";
+        setTimeout(function(){myTimer()},200);
+        function myTimer() {
+            document.getElementById("videoInPoint").lastElementChild.innerHTML="START";
+        }
     }
-    console.log('in time',inPoint[currentCut]);
+    document.getElementById('slider').style.display = 'none';
+    if (outPoint[currentCut]) {
+        document.getElementById('slider').style.display = '';
+        userEditCounter=4;
+        videoLoadSwitch=5;
+    }
+    //console.log('in time',inPoint[currentCut]);
     var timeVal = (inPoint[currentCut]/vidDuration)*100;
     timeVal = timeVal.toPrecision(4);
     document.getElementById("InTimeCode").value=inPoint[currentCut];
     valueStart.value = inPoint[currentCut];
-    sliderDbl.noUiSlider.set([timeVal,null]);
-
-    //sliderDbl = document.getElementById("sliderDbl");
-    // noUiSlider.create(sliderDbl, {
-    //   start: [timeVal,timeVal],
-    //   connect:true,
-    //   range: {
-    //     "min": 0,
-    //     "max": 100
-    //   }
-    // });
-
-    // var element=document.createElement("script");
-    // element.setAttribute('id', 'uislider-script');
-    // element.id="{{$entry -> country}}";
-    // element.style.display="none";\
-    if(totalCutNumber>0){
-        //sliderDbl.noUiSlider.destroy();
-    }
-    // element.innerHTML = '';
-    // document.body.appendChild(element);
-
-    //slider.noUiSlider.destroy();
     $("#sliderDbl").show();
 
-    document.getElementById("videoNoPoint").style.display="";
     //document.getElementById("videoInPoint").disabled=true;
-    document.getElementById("videoInPoint").style.display="";
+    //document.getElementById("videoInPoint").style.display="";
+    document.getElementById("videoInPoint").blur();
     // document.getElementById("submitEdit").style.display="none";
     // document.getElementById("previewEdit").style.display="";
     document.getElementById('previewEdit').disabled=true;
@@ -236,45 +230,39 @@ function videoInPoint(type, val){
     document.getElementById("videoOutPoint").disabled=false;
     document.getElementById("addEdit").style.visibility="hidden";
 
-    setTimeout(function(){myTimer()},200);
-    function myTimer() {
-        document.getElementById("videoNoPoint").style.display="none";
-        document.getElementById("videoOutPoint").style.display="";
-    }
 }
 
 function videoOutPoint(type, val){
     outPoint[currentCut]= jwplayer("videoPlaybackFrame").getPosition();
     if (typeof type !== 'undefined' && type === 'slider') {
         outPoint[currentCut] = val;
+        userEditCounter=1;
     } else {
-        userEditCounter=4;
-        videoLoadSwitch=5;
         document.getElementById("videoInPoint").disabled=true;
         document.getElementById("videoOutPoint").disabled=true;
-        document.getElementById('slider').style.display = '';
+        document.getElementById("videoOutPoint").lastElementChild.innerHTML="CUT";
+        setTimeout(function(){myTimer()},200);
+        function myTimer() {
+            document.getElementById("videoOutPoint").lastElementChild.innerHTML="END";
+        }
     }
-    console.log( outPoint[currentCut] );
+    if (inPoint[currentCut]) {
+        document.getElementById('slider').style.display = '';
+        userEditCounter=4;
+        videoLoadSwitch=5;
+    }
+    console.log( outPoint[currentCut], 'userEditCounter',userEditCounter );
     var timeVal = (outPoint[currentCut]/vidDuration)*100;
     timeVal = timeVal.toPrecision(4);
-    slider.noUiSlider.set([ timeVal ]);
-    sliderDbl.noUiSlider.set([null,timeVal]);
+    // slider.noUiSlider.set([ timeVal ]);
+    // sliderDbl.noUiSlider.set([null,timeVal]);
     document.getElementById("OutTimeCode").value=outPoint[currentCut];
-    // slider.noUiSlider.destroy();
-    // noUiSlider.create(slider, {
-    //   start: [null, null],
-    //   connect:"upper",
-    //   range: {
-    //     "min": 0,
-    //     "max": 100
-    //   }
-    // });
 
     document.getElementById("submitEdit").disabled=false;
     document.getElementById("previewEdit").disabled=false;
     document.getElementById("previewEdit").style.visibility="";
     //document.getElementById("videoOutPoint").style.display="none";
-    document.getElementById("videoNoPoint").style.display="";
+    //document.getElementById("videoNoPoint").style.display="";
     document.getElementById("submitEdit").className = "btn btn-warning";
     document.getElementById("submitEdit").style.color="#000";
     document.getElementById("addEdit").style.visibility="";
@@ -291,13 +279,6 @@ function videoOutPoint(type, val){
     // $("#sliderDbl").hide();
     // $("#slider").show();
     //totalCutNumber++;
-
-    setTimeout(function(){myTimer()},200);
-    function myTimer() {
-        document.getElementById("videoNoPoint").style.display="none";
-        document.getElementById("videoInPoint").style.display="";
-    }
-
 }
 
 // jwplayer("videoPlaybackFrame").on("ready", function (event){
@@ -338,6 +319,7 @@ $( window ).resize(function () {
 });
 
 jwplayer("videoPlaybackFrame").onTime(function (event){
+    //console.log('userEditCounter',userEditCounter);
     var realVal = event.position;
     var date = new Date(null);
     date.setSeconds( Math.round( realVal ) ); // specify value for SECONDS here
@@ -360,7 +342,6 @@ jwplayer("videoPlaybackFrame").onTime(function (event){
         ProgressBarDuring = (realVal/vidDuration);
         ProgressBarDuring = ProgressBarDuring*100;
         ProgressBarDuring = ProgressBarDuring.toPrecision(6);
-
         sliderDbl.noUiSlider.set([null,ProgressBarDuring]);
         // ProgressBarDuring = (realVal/vidDuration);
         // ProgressBarDuring = ProgressBarDuring*100;
@@ -372,8 +353,8 @@ jwplayer("videoPlaybackFrame").onTime(function (event){
         ProgressBarDuring = (realVal/vidDuration);
         ProgressBarDuring = ProgressBarDuring*100;
         ProgressBarDuring = ProgressBarDuring.toPrecision(6);
-        sliderDbl.noUiSlider.set([null,ProgressBarDuring]);
         slider.noUiSlider.set([ProgressBarDuring]);
+        sliderDbl.noUiSlider.set([null,ProgressBarDuring]);
         // ProgressBarAfter = ((realVal-outPoint[currentCut])/vidDuration);
         // ProgressBarAfter = ProgressBarAfter*100;
         // ProgressBarAfter = ProgressBarAfter.toPrecision(2);
@@ -392,14 +373,15 @@ jwplayer("videoPlaybackFrame").onTime(function (event){
         // console.log(relativePos,relativeEnd)
         // document.getElementById("editVis").style.width =(ProgressBarDuring+"%");
     }
-
+    //console.log('videoLoadSwitch',videoLoadSwitch);
     if (videoLoadSwitch==4){
-        //console.log( videoLoadSwitch );
+        console.log( 'videoLoadSwitch 4', realVal > outPoint[currentCut] );
         // console.log('currentCut',currentCut,totalCutNumber,realVal > outPoint[currentCut],currentCut >= totalCutNumber);
         if (currentCut >= (totalCutNumber -1 ) && realVal > outPoint[currentCut]){
 
             jwplayer("videoPlaybackFrame").pause(true);
-        } else if (realVal > outPoint[currentCut] && realVal < inPoint[currentCut+1]){
+        } else if (realVal > outPoint[currentCut] ){
+            // && realVal < inPoint[currentCut+1]
             currentCut++;
             // console.log('currentCut',currentCut,inPoint[currentCut], inPoint);
             jwplayer("videoPlaybackFrame").seek(inPoint[currentCut]);
@@ -422,5 +404,3 @@ jwplayer("videoPlaybackFrame").onTime(function (event){
         }
     }
 });
-
-
