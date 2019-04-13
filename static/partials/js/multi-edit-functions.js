@@ -27,8 +27,8 @@ function displayTableElement(editNumber) {
 }
 
 function reloadVideoInput() {
-    // location.reload();
-    document.getElementById("InputYouTubeLink").value = "";
+    //location.reload();
+    //document.getElementById("InputYouTubeLink").value = "";
     document.getElementById("inputRowOne").style.display = "";
     document.getElementById("InputYouTubeLink").style.display = "";
     document.getElementById("changeVideoButton").style.display = "none";

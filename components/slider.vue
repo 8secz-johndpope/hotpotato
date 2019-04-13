@@ -1,7 +1,7 @@
 <template>
     <div class="slider-area vertical-padding-10" id="videoTimeline" style="">
-        <div id="slider" style="display: none;"></div>
         <div id="sliderDbl"></div>
+        <div id="slider" style="display: none;"></div>
     </div>
 </template>
 
@@ -34,7 +34,7 @@
 
 <style lang="scss">
     .slider-area {
-        #slider .noUi-handle {
+        .slider .noUi-handle, #slider .noUi-handle {
             &:before {
                 content: '';
                 width: 100%;
@@ -43,12 +43,12 @@
                 position: absolute;
             }
         }
-        #slider .noUi-connect {
+        .slider .noUi-connect, #slider .noUi-connect {
             &:before {
                 background: #3FB8AF;
             }
         }
-        #sliderDbl .noUi-connect {
+        .sliderDbl .noUi-connect, #sliderDbl .noUi-connect {
             &:before {
                 background: #ec971f;
             }

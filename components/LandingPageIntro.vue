@@ -59,7 +59,10 @@
                         <h4 class="d-flex">Drag or click start edit points</h4>
                     </div>
                     <div class="w-100">
-                        <slider></slider>
+                        <div class="slider-area vertical-padding-10" id="videoTimeline" style="">
+                            <div id="sliderIntro" class="slider" style="display: none;"></div>
+                            <div id="sliderDblIntro" class="sliderDbl"></div>
+                        </div>
                         <div class="vertical-padding-10">
                             <button type="button" class="btn btn-default bg-dark" id="videoInPoint"
                                     @click="stateChange(1,1)"
@@ -180,6 +183,15 @@
             //console.log('cta', (this.cta === 1 ) );
             if ( this.walkthrough === true || this.walkthrough === 'true' ) {
                 console.log('noUiSlider', noUiSlider);
+                var sliderDblIntro = document.getElementById('sliderDblIntro');
+                noUiSlider.create(sliderDblIntro, {
+                    start: [0,100],
+                    connect:true,
+                    range: {
+                        "min": 0,
+                        "max": 100
+                    }
+                });
             }
         },
         methods: {
@@ -195,7 +207,7 @@
                 var index = parseInt( block.getAttribute('index') );
                 this.toggles[index].toggle = type;
                 if ( index === 1 ) {
-                    var sliderDbl = document.getElementById('sliderDbl');
+                    var sliderDbl = document.getElementById('sliderDblIntro');
                     console.log('type',type);
                     if ( type === 1 ) {
                         sliderDbl.noUiSlider.set([30,100]);

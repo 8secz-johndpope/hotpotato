@@ -19,7 +19,8 @@
     <div class=" col-xs-12 col-md-6 ">
     <h2 class=" padding-bottom-15 text-center">Walkthrough Tutorial</h2>
      <div class="d-flex vertical-padding-15 text-center hp-subtitle">
-      <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
+      <a v-if="step > 0"
+              class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
        <i class="fas mod fa-chevron-left"></i>
        <span class="padding-left-5">PREVIOUS</span>
       </a>
@@ -33,18 +34,22 @@
      </div>
       <div class="padding-top-30 start">
        <InputBar :class="( step < 3 ) ? '' : 'hidden'" :enable="false"></InputBar>
+       <DataWatch v-if="( step > 2 )"></DataWatch>
+
        <SearchListing v-if="step < 2"></SearchListing>
        <div class="d-flex justify-content-center">
-        <slider v-if="step > 2 && step < 5"
-        class="col-xs-12 col-md-6 "></slider>
+        <!--<slider v-if="step > 3 && step < 5"-->
+        <!--class="col-xs-12 col-md-6 "></slider>-->
         <button id="addEdit" type="button" class="btn btn-default bg-dark"
         v-if="step === 5">
          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
          <span> ADD ANOTHER CUT</span>
         </button>
-        <VideoPlayerAndSidebar v-if="step > 5"></VideoPlayerAndSidebar>
        </div>
       </div>
+        <VideoPlayerAndSidebar v-if="step > 2"></VideoPlayerAndSidebar>
+           <EditButtonBarOne v-if="step > 2"></EditButtonBarOne>
+           <EditButtonBarTwo v-if="step > 2"></EditButtonBarTwo>
       <progress-bar class="disabled padding-top-30"></progress-bar>
     </div>
   </div>
@@ -79,6 +84,9 @@ import SearchListing from "../components/SearchListing.vue"
 import ProgressBar from "../components/ProgressBar.vue"
 import slider from "../components/slider.vue"
 import VideoPlayerAndSidebar from "../components/VideoPlayerAndSidebar.vue"
+import EditButtonBarOne from "../components/EditButtonBarOne.vue"
+import EditButtonBarTwo from "../components/EditButtonBarTwo.vue"
+import DataWatch from "../components/DataWatch.vue"
 
 if (process.client) {
     // (function(document, tag) {
@@ -107,7 +115,10 @@ export default {
         SearchListing,
         ProgressBar,
         slider,
-        VideoPlayerAndSidebar
+        VideoPlayerAndSidebar,
+        EditButtonBarOne,
+        EditButtonBarTwo,
+        DataWatch
     },
     data () {
       return {
@@ -117,6 +128,7 @@ export default {
               'Click Next to start the walkthrough tutorial',
               'Start by search for a video',
               'Or enter a video link',
+              'Start the video playback',
               "Drag the slider's first toggle to where you want your clip to start",
               'Drag the second toggle to where you want the clip to end',
               "Click add another edit if you want more than one clip in your video edit",
@@ -132,7 +144,7 @@ export default {
             link: [
                 //{type: 'text/javascript', src: '/partials/js/video-parse-link.js'},
                 //{type: 'text/javascript', src: 'partials/js/home-landing-toggles.js'},
-                {type: 'text/javascript', src: '/partials/js/multi-edit-functions.js'},
+                //{type: 'text/javascript', src: '/partials/js/multi-edit-functions.js'},
                 //{type: 'text/javascript', src: '/partials/js/jw-player-home-landing.js'}
             ]
         }
@@ -179,6 +191,7 @@ export default {
     watch: {
         'step': function (value) {
             //var sliderDbl = document.getElementById('sliderDbl');
+            const vm = this;
             if (value === 1) {
                 setTimeout(function () {
                     document.getElementById('InputYouTubeLink').value = 'Elon';
@@ -198,32 +211,80 @@ export default {
                 },1200);
             } else if ( value === 3) {
                 this.progress = 1;
-                setTimeout(function () {
-                    var sliderDbl = document.getElementById('sliderDbl');
-                    sliderDbl.noUiSlider.set([30,null]);
-                },450);
-            } else if ( value === 4) {
-                //this.progress = 1;
-                setTimeout(function () {
-                    var sliderDbl = document.getElementById('sliderDbl');
-                    sliderDbl.noUiSlider.set([null,70]);
-                },270);
-            } else if ( value === 5) {
-                setTimeout(function () {
-                    var slider = document.getElementById('slider');
-                    slider.style.display = '';
-                    //sliderDbl.noUiSlider.set([30,null]);
-                },450);
-            } else if ( value === 6 ) {
                 var vidLink = 'https://youtube.com/watch?v=ycPr5-27vSI';
                 document.getElementById('InputYouTubeLink').value = 'https://youtube.com/watch?v=ycPr5-27vSI';
                 document.getElementById('ytVidCode').value = 'ycPr5-27vSI';
+                var inPoint = [];
+                var outPoint = [];
                 (function(document, tag) {
+                        var scriptTag = document.createElement(tag), // create a script tag
+                            firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
+                        scriptTag.src = 'partials/js/multi-edit-functions.js'; // set the source of the script to your script
+                        firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
                     var scriptTag = document.createElement(tag), // create a script tag
                         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
                     scriptTag.src = 'partials/js/jw-player-and-slider.js'; // set the source of the script to your script
                     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
                 }(document, 'script'));
+                setTimeout(function () {
+                    vm.step++;
+                },500);
+            } else if ( value === 4) {
+                setTimeout(function () {
+                    var sliderDbl = document.getElementById('sliderDbl');
+                    //sliderDbl.noUiSlider.set([30,null]);
+                    $('.noUi-handle.noUi-handle-lower .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
+                        console.log('listender',e.currentTarget);
+                        if (value === 4) {
+                            vm.step = 5;
+                        }
+                    });
+
+                },450);
+            } else if ( value === 5) {
+                //this.progress = 1;
+                function NextAction() {
+                    console.log('listender');
+                    if (value === 5) {
+                        vm.step++;
+                    }
+                }
+                setTimeout(function () {
+                    var sliderDbl = document.getElementById('sliderDbl');
+                    //sliderDbl.noUiSlider.set([30,null]);
+                    $('.noUi-handle.noUi-handle-upper .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
+                        console.log('listender',e.currentTarget);
+                        if (value === 5) {
+                            vm.step = 6;
+                        }
+                    });
+                }, 450);
+
+            } else if ( value === 6) {
+                setTimeout(function () {
+                    var slider = document.getElementById('slider');
+                    slider.style.display = '';
+                    //sliderDbl.noUiSlider.set([30,null]);
+                },450);
+            } else if ( value === 7 ) {
+                // var vidLink = 'https://youtube.com/watch?v=ycPr5-27vSI';
+                // document.getElementById('InputYouTubeLink').value = 'https://youtube.com/watch?v=ycPr5-27vSI';
+                // document.getElementById('ytVidCode').value = 'ycPr5-27vSI';
+                // $.getScript('partials/js/multi-edit-functions.js', function () {
+                //     console.log('multi-edit-function');
+                // });
+                // (function(document, tag) {
+                //     var scriptTag = document.createElement(tag), // create a script tag
+                //         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
+                //     scriptTag.src = 'partials/js/multi-edit-functions.js'; // set the source of the script to your script
+                //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+                // }(document, 'script'));
+                // (function(document, tag) {
+                //     var scriptTag = document.createElement(tag), // create a script tag
+                //         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
+                //     scriptTag.src = 'partials/js/jw-player-and-slider.js'; // set the source of the script to your script
+                //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
+                // }(document, 'script'));
 
                 //setTimeout(function () {
                 //     $.getScript('partials/js/jw-player-and-slider.js', function () {

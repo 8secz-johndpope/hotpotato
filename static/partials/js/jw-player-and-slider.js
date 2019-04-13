@@ -29,27 +29,34 @@ var shortYTLink = inputYTLink=vidLink;
 var tempOutputYoutubeLink;
 var valueStart = document.getElementById("value-start");
 var valueStop = document.getElementById("value-stop");
-
-noUiSlider.create(slider, {
-    start: [null],
-    connect:"lower",
-    range: {
-        "min": 0,
-        "max": 100
-    }
-});
-noUiSlider.create(sliderDbl, {
-    start: [null,100],
-    connect:true,
-    range: {
-        "min": 0,
-        "max": 100
-    }
-});
-
-
 var SliderVal;
 var handleVal;
+
+if (typeof outPoint === 'undefined' || outPoint === undefined) {
+    var inPoint = [];
+    var outPoint = [];
+}
+//console.log('outPoint',outPoint, (typeof outPoint === 'undefined' || outPoint === undefined) );
+
+if (typeof sliderDbl.noUiSlider === 'undefined') {
+    noUiSlider.create(sliderDbl, {
+        start: [0, 100],
+        connect: true,
+        range: {
+            "min": 0,
+            "max": 100
+        }
+    });
+
+    noUiSlider.create(slider, {
+        start: [null],
+        connect: "lower",
+        range: {
+            "min": 0,
+            "max": 100
+        }
+    });
+}
 
 // When the slider value changes, update the input and span
 slider.noUiSlider.on("change", function( values, handle ) {
@@ -89,6 +96,7 @@ sliderDbl.noUiSlider.on("change", function( values, handle ) {
     //userEditCounter=-1;
     sliderVal = (values[handle]/100)*vidDuration;
     jwplayer("videoPlaybackFrame").seek(sliderVal);
+
     if ( handle ) {
         valueStop.value = values[handle];
         outPoint[currentCut] = sliderVal.toPrecision(4);

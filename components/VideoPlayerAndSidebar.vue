@@ -25,15 +25,16 @@
                 <div class ="embed-responsive embed-responsive-16by9" id="responsiveVideoFrame">
                     <div id="videoPlaybackFrame"></div></div>
 
-                <div class="slider-area" id="videoTimeline" style="">
-                    <div id="sliderDbl" style="display:none;"></div>
-                    <div id="slider"></div>
-                    <!-- <div class="progress-bar progress-bar-info" id="preInVis" role="progressbar" style="">
-                  </div>
-                    <div class="progress-bar progress-bar-warning progress-bar-striped" id="editVis" role="progressbar" style=""> NEW VIDEO</div>
-                      <div class="progress-bar progress-bar-info" id="postOutVis" role="progressbar" style="">
-                      </div> -->
-                </div>
+                <!--<div class="slider-area" id="videoTimeline" style="">-->
+                    <!--<div id="sliderDbl" style="display:none;"></div>-->
+                    <!--<div id="slider"></div>-->
+                    <!--<div class="progress-bar progress-bar-info" id="preInVis" role="progressbar" style="">-->
+                  <!--</div>-->
+                    <!--<div class="progress-bar progress-bar-warning progress-bar-striped" id="editVis" role="progressbar" style=""> NEW VIDEO</div>-->
+                      <!--<div class="progress-bar progress-bar-info" id="postOutVis" role="progressbar" style="">-->
+                      <!--</div>-->
+                <!--</div>-->
+                <slider></slider>
             </div>
         </div>
         <div class="row">
@@ -48,17 +49,26 @@
 </template>
 
 <script>
+    import slider from './slider.vue'
+
     export default {
         name: "video-player-and-sidebar",
+        components: {
+            slider
+        },
         data () {
             return {
                 list: new Array(11)
+            }
+        },
+        mounted: function () {
+            if (process.client) {
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss">
     .clips tr td {
         border: 1px solid white;
     }
@@ -92,4 +102,6 @@
     .fa {
         font-size: 18px;
     }
+
+
 </style>
