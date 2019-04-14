@@ -3,10 +3,12 @@
         <div class="progress-bar d-flex justify-content-center">
             <a @click="goTo(item, $event)" v-for="item in barList"
             class="d-flex btn btn-default bg-dark hp-subtitle"
-            :class="( (progress+1) > item.index ) ? 'active': ''">
+            :class="( (progress+1) > item.index ) ? 'active progress-'+item.index: 'progress-'+item.index">
+                <div class="inner d-flex">
                 <i :class="item.icon"
                    class="d-flex horizontal-margin-5 "></i>
                 <span class="d-flex horizontal-margin-5 ">{{item.name}}</span>
+                </div>
                 <div class="triangle-right">
                 </div>
             </a>
@@ -70,6 +72,10 @@
             box-shadow: unset;
             border-right: 0;
             border-left: 0;
+            //color: white;
+            &.active, &:hover, &:focus {
+                //color: #000;
+            }
             &.active {
                 .triangle-right:after {
                     background: white;
@@ -79,6 +85,12 @@
                 background: #dfd9d0;
                 .triangle-right:after {
                     background: #dfd9d0;
+                }
+            }
+            &:not(.progress-0) {
+                .inner {
+                    left: 10px;
+                    position: relative;
                 }
             }
         }

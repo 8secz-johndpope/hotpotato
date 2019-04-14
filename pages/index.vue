@@ -17,7 +17,8 @@
    <div class=" vertical-padding-45">
     <div class="row d-flex justify-content-center d-flex ">
     <div class=" col-xs-12 col-md-6 ">
-    <h2 class=" padding-bottom-15 text-center">Walkthrough Tutorial</h2>
+    <h2 class=" padding-bottom-30 text-center">Walkthrough Tutorial</h2>
+     <progress-bar class="disabled padding-bottom-30"></progress-bar>
      <div class="d-flex vertical-padding-15 text-center hp-subtitle">
       <a v-if="step > 0"
               class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
@@ -40,17 +41,18 @@
        <div class="d-flex justify-content-center">
         <!--<slider v-if="step > 3 && step < 5"-->
         <!--class="col-xs-12 col-md-6 "></slider>-->
-        <button id="addEdit" type="button" class="btn btn-default bg-dark"
-        v-if="step === 5">
-         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-         <span> ADD ANOTHER CUT</span>
-        </button>
+        <!--<button id="addEdit" type="button" class="btn btn-default bg-dark"-->
+        <!--v-if="step === 5">-->
+         <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>-->
+         <!--<span> ADD ANOTHER CUT</span>-->
+        <!--</button>-->
        </div>
       </div>
-        <VideoPlayerAndSidebar v-if="step > 2"></VideoPlayerAndSidebar>
-           <EditButtonBarOne v-if="step > 2"></EditButtonBarOne>
-           <EditButtonBarTwo v-if="step > 2"></EditButtonBarTwo>
-      <progress-bar class="disabled padding-top-30"></progress-bar>
+           <EditButtonBarOne v-if="step > 2 && step < 8"></EditButtonBarOne>
+           <EditButtonBarTwo v-if="step > 2 && step < 8"></EditButtonBarTwo>
+    <VideoPlayerAndSidebar v-if="step > 2"></VideoPlayerAndSidebar>
+           <ExportButtonBar1 v-if=" step > 7"></ExportButtonBar1>
+           <ExportButtonBar2 v-if="step > 7"></ExportButtonBar2>
     </div>
   </div>
   <div class="video-part vertical-padding-15 start" style="overflow-x: unset;">
@@ -84,8 +86,10 @@ import SearchListing from "../components/SearchListing.vue"
 import ProgressBar from "../components/ProgressBar.vue"
 import slider from "../components/slider.vue"
 import VideoPlayerAndSidebar from "../components/VideoPlayerAndSidebar.vue"
-import EditButtonBarOne from "../components/EditButtonBarOne.vue"
-import EditButtonBarTwo from "../components/EditButtonBarTwo.vue"
+import EditButtonBarOne from "../components/EditButtonBar1.vue"
+import EditButtonBarTwo from "../components/EditButtonBar2.vue"
+import ExportButtonBar1 from "../components/ExportButtonBar1.vue"
+import ExportButtonBar2 from "../components/ExportButtonBar2.vue"
 import DataWatch from "../components/DataWatch.vue"
 
 if (process.client) {
@@ -101,7 +105,9 @@ if (process.client) {
     //     scriptTag.src = 'partials/js/jw-player-home-landing.js'; // set the source of the script to your script
     //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
     // }(document, 'script'));
-
+    var vidLink = 'https://www.youtube.com/watch?v=Dr450QamBOU&has_verified=1';
+    var inPoint = [];
+    var outPoint = [];
 }
 
 export default {
@@ -118,6 +124,8 @@ export default {
         VideoPlayerAndSidebar,
         EditButtonBarOne,
         EditButtonBarTwo,
+        ExportButtonBar1,
+        ExportButtonBar2,
         DataWatch
     },
     data () {
@@ -128,7 +136,7 @@ export default {
               'Click Next to start the walkthrough tutorial',
               'Start by search for a video',
               'Or enter a video link',
-              'Start the video playback',
+              'Playback the video to a memorable moment',
               "Drag the slider's first toggle to where you want your clip to start",
               'Drag the second toggle to where you want the clip to end',
               "Click add another edit if you want more than one clip in your video edit",
@@ -193,6 +201,7 @@ export default {
             //var sliderDbl = document.getElementById('sliderDbl');
             const vm = this;
             if (value === 1) {
+                //input search term
                 setTimeout(function () {
                     document.getElementById('InputYouTubeLink').value = 'Elon';
                 },250);
@@ -203,19 +212,18 @@ export default {
                     getYouTubeVideoSearchData();
                 },500);
             } else if (value === 2) {
+                //input youtube link
                 setTimeout(function () {
                     document.getElementById('InputYouTubeLink').value = 'youtube.com';
                 },650);
                 setTimeout(function () {
-                    document.getElementById('InputYouTubeLink').value = 'youtube.com/watch?v=ycPr5-27vSI';
+                    document.getElementById('InputYouTubeLink').value = 'youtube.com/watch?v=Dr450QamBOU';
                 },1200);
             } else if ( value === 3) {
+                //play start video
                 this.progress = 1;
-                var vidLink = 'https://youtube.com/watch?v=ycPr5-27vSI';
-                document.getElementById('InputYouTubeLink').value = 'https://youtube.com/watch?v=ycPr5-27vSI';
+                document.getElementById('InputYouTubeLink').value = vidLink;
                 document.getElementById('ytVidCode').value = 'ycPr5-27vSI';
-                var inPoint = [];
-                var outPoint = [];
                 (function(document, tag) {
                         var scriptTag = document.createElement(tag), // create a script tag
                             firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
@@ -227,75 +235,80 @@ export default {
                     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
                 }(document, 'script'));
                 setTimeout(function () {
-                    vm.step++;
-                },500);
-            } else if ( value === 4) {
-                setTimeout(function () {
-                    var sliderDbl = document.getElementById('sliderDbl');
-                    //sliderDbl.noUiSlider.set([30,null]);
-                    $('.noUi-handle.noUi-handle-lower .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
-                        console.log('listender',e.currentTarget);
-                        if (value === 4) {
-                            vm.step = 5;
-                        }
-                    });
+                    jwplayer("videoPlaybackFrame").seek(0);
+                    //console.log('getPosition', jwplayer("videoPlaybackFrame").getPosition());
+                },1000);
 
-                },450);
-            } else if ( value === 5) {
-                //this.progress = 1;
-                function NextAction() {
-                    console.log('listender');
-                    if (value === 5) {
-                        vm.step++;
-                    }
-                }
+            } else if ( value === 4) {
+                //set edit start
                 setTimeout(function () {
                     var sliderDbl = document.getElementById('sliderDbl');
-                    //sliderDbl.noUiSlider.set([30,null]);
-                    $('.noUi-handle.noUi-handle-upper .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
-                        console.log('listender',e.currentTarget);
-                        if (value === 5) {
-                            vm.step = 6;
-                        }
-                    });
-                }, 450);
+                    sliderDbl.noUiSlider.set([9,null]);
+                    var sliderVal = (9/100)*vidDuration;
+                    jwplayer("videoPlaybackFrame").seek(sliderVal);
+                    var val = sliderVal.toPrecision(4);
+                    console.log('inPoint', val);
+                    videoInPoint('slider',val);
+                    //setTimeout(function () {
+                    // sliderVal = (values[handle]/100)*vidDuration;
+                    // jwplayer("videoPlaybackFrame").seek(sliderVal);
+                    // $('.noUi-handle.noUi-handle-lower .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
+                    //     console.log('listender',e.currentTarget);
+                    //     if (value === 4) {
+                    //         vm.step = 5;
+                    //     }
+                    // });
+
+                },500);
+            } else if ( value === 5) {
+                //set edit end
+                //this.progress = 1;
+                setTimeout(function () {
+                    inPoint[0] = 56.41;
+                    var sliderDbl = document.getElementById('sliderDbl');
+                    sliderDbl.noUiSlider.set([ null,20]);
+                    var sliderVal = (20/100)*vidDuration;
+                    jwplayer("videoPlaybackFrame").seek(sliderVal);
+                    outPoint[currentCut] = sliderVal.toPrecision(4);
+                    console.log('outPoint', outPoint[currentCut]);
+                    videoOutPoint('slider',outPoint[currentCut]);
+                    userEditCounter = 4;
+                    videoLoadSwitch=5;
+                    // $('.noUi-handle.noUi-handle-upper .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
+                    //     console.log('listender',e.currentTarget);
+                    //     if (value === 5) {
+                    //         vm.step = 6;
+                    //     }
+                    // });
+                }, 500);
 
             } else if ( value === 6) {
+                //add another edit
                 setTimeout(function () {
-                    var slider = document.getElementById('slider');
-                    slider.style.display = '';
-                    //sliderDbl.noUiSlider.set([30,null]);
+                    inPoint[0] = 56.41;
+                    // var slider = document.getElementById('slider');
+                    // slider.style.display = '';
+                    // sliderDbl.noUiSlider.set([30,null]);
+                    var ButtonPos = $('#addEdit').offset().top;
+                    $("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
                 },450);
             } else if ( value === 7 ) {
-                // var vidLink = 'https://youtube.com/watch?v=ycPr5-27vSI';
-                // document.getElementById('InputYouTubeLink').value = 'https://youtube.com/watch?v=ycPr5-27vSI';
-                // document.getElementById('ytVidCode').value = 'ycPr5-27vSI';
-                // $.getScript('partials/js/multi-edit-functions.js', function () {
-                //     console.log('multi-edit-function');
-                // });
-                // (function(document, tag) {
-                //     var scriptTag = document.createElement(tag), // create a script tag
-                //         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
-                //     scriptTag.src = 'partials/js/multi-edit-functions.js'; // set the source of the script to your script
-                //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
-                // }(document, 'script'));
-                // (function(document, tag) {
-                //     var scriptTag = document.createElement(tag), // create a script tag
-                //         firstScriptTag = document.getElementsByTagName(tag)[0]; // find the first script tag in the document
-                //     scriptTag.src = 'partials/js/jw-player-and-slider.js'; // set the source of the script to your script
-                //     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
-                // }(document, 'script'));
-
-                //setTimeout(function () {
-                //     $.getScript('partials/js/jw-player-and-slider.js', function () {
-                //         console.log('ss scriot');
-                //     });
-                //});
+                //submit edit
                 setTimeout(function () {
+                    var ButtonPos = $('#submitEdit').offset().top;
+                    $("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
                     //var slider = document.getElementById('slider');
                     //slider.style.display = '';
                     //sliderDbl.noUiSlider.set([30,null]);
                 },450);
+            } else if ( value === 8 ) {
+                //copy link
+                setTimeout(function () {
+                    var text = document.getElementById('OutputYouTubeLink').value;
+                    document.getElementById('OutputYouTubeLink').value = text+ 'v=IRycO';
+                },450);
+            } else if ( value === 9 ) {
+                //download edit
             }
         }
     }
@@ -303,5 +316,15 @@ export default {
 </script>
 
 <style>
+ #videoPlaybackFrame {
+  /*width: 50% !important;*/
+  height: 250px !important;
 
+ }
+ body .embed-responsive-16by9 {
+  padding-bottom: initial;
+  padding-bottom: unset;
+  height: unset;
+  heigh: initial;
+ }
 </style>

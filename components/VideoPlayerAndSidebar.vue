@@ -73,6 +73,7 @@
         border: 1px solid white;
     }
     .clips tr:hover {
+        background-color: white;
         cursor: pointer;
     }
     .clips tr p {
