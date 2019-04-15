@@ -13,7 +13,7 @@
                 <span> Restart</span>
             </button>
         </div>
-        <div class="col-xs-12 col-sm-offset-1 col-md-offset-0 col-sm-10 col-md-7 col-lg-6 " style="">
+        <div class="output-block col-xs-12 col-sm-offset-1 col-md-offset-0 col-sm-10 col-md-7 col-lg-6 " style="">
             <input class="well " readonly="readonly" style="color:#000"
                    id="OutputYouTubeLink"
                    value="hotpotato.me/watch?">

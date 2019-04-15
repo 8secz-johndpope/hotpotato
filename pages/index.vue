@@ -21,12 +21,12 @@
      <progress-bar class="disabled padding-bottom-30"></progress-bar>
      <div class="d-flex vertical-padding-15 text-center hp-subtitle">
       <a v-if="step > 0"
-              class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
+              class="d-flex align-items-center justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
        <i class="fas mod fa-chevron-left"></i>
        <span class="padding-left-5">PREVIOUS</span>
       </a>
       <span class="d-flex flex-fill justify-content-center align-items-center" v-html="walkthroughText[step]"></span>
-      <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-warning" @click="step++">
+      <a class="d-flex align-items-center justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default" @click="step++">
        <span>NEXT</span>
        <i class="fas mod fa-chevron-right padding-left-5"></i>
       </a>
@@ -259,6 +259,7 @@ export default {
                     //setTimeout(function () {
                     // sliderVal = (values[handle]/100)*vidDuration;
                     // jwplayer("videoPlaybackFrame").seek(sliderVal);
+                    $('.noUi-handle.noUi-handle-lower .noUi-touch-area').addClass('highlight');
                     $('.noUi-handle.noUi-handle-lower .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
                         console.log('listender',e.currentTarget);
                         if (value === 4) {
@@ -270,6 +271,8 @@ export default {
             } else if ( value === 5) {
                 //set edit end
                 //this.progress = 1;
+                $('.noUi-touch-area').removeClass('highlight');
+                $('.noUi-handle.noUi-handle-upper .noUi-touch-area').addClass('highlight');
                 setTimeout(function () {
                     inPoint[0] = 56.41;
                     var sliderDbl = document.getElementById('sliderDbl');
@@ -292,6 +295,8 @@ export default {
             } else if ( value === 6) {
                 //add another edit
                 setTimeout(function () {
+                    $('.noUi-handle .noUi-touch-area').removeClass('highlight');
+                    $('#addEdit').addClass('highlight');
                     inPoint[0] = 56.41;
                     // var slider = document.getElementById('slider');
                     // slider.style.display = '';
@@ -303,6 +308,8 @@ export default {
                 //submit edit
                 this.progress = 2;
                 setTimeout(function () {
+                    $('#addEdit').removeClass('highlight');
+                    $('#submitEdit').addClass('highlight');
                     var ButtonPos = $('#submitEdit').offset().top;
                     //$("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
                     //var slider = document.getElementById('slider');
@@ -312,18 +319,22 @@ export default {
             } else if ( value === 8 ) {
                 //copy link
                 setTimeout(function () {
+                    $('#submitEdit').removeClass('highlight');
                     var text = document.getElementById('OutputYouTubeLink').value;
                     document.getElementById('OutputYouTubeLink').value = text+ 'v=IRycO';
+                    $('.output-block').addClass('highlight mod');
                 },450);
             } else if ( value === 9 ) {
                 //download edit
+                $('.output-block').removeClass('highlight mod');
+                $('#downloadButton').addClass('highlight');
             }
         }
     }
 }
 </script>
 
-<style>
+<style lang="scss">
  #videoPlaybackFrame {
   /*width: 50% !important;*/
   height: 250px !important;
@@ -333,6 +344,26 @@ export default {
   padding-bottom: initial;
   padding-bottom: unset;
   height: unset;
-  heigh: initial;
+  height: initial;
+ }
+ .highlight:after {
+  margin-top: 21px;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-style: solid;
+  border-width: 0 16px 16px 16px;
+  border-color: transparent transparent #ec971f transparent;
+  /*border-width: 9px 9px 0 9px;*/
+  /*border-color: #fff transparent transparent transparent;*/
+  opacity: 1;
+  content: '';
+  &.mod {
+   margin-top: 1px;
+  }
+ }
+ .highlight:hover:after, .highlight:focus:after {
+  opacity: 0.65;
  }
 </style>
