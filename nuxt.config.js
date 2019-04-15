@@ -94,7 +94,7 @@ module.exports = {
         '@nuxtjs/proxy',
         // Doc: https://bootstrap-vue.js.org/docs/
         //'bootstrap-vue/nuxt',
-        '@nuxtjs/pwa',
+        //'@nuxtjs/pwa',
     ],
     /*
     ** Axios module configuration
@@ -102,7 +102,11 @@ module.exports = {
     axios: {
         // See https://github.com/nuxt-community/axios-module#options
     },
-    generate: {},
+    generate: {
+        routes: [
+            '/',
+        ]
+    },
     /*
     ** Build configuration
     */

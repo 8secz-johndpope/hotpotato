@@ -21,12 +21,12 @@
      <progress-bar class="disabled padding-bottom-30"></progress-bar>
      <div class="d-flex vertical-padding-15 text-center hp-subtitle">
       <a v-if="step > 0"
-              class="d-flex align-items-center justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="step--">
+              class="d-flex align-items-center justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default bg-dark" @click="changeStep(-1)">
        <i class="fas mod fa-chevron-left"></i>
        <span class="padding-left-5">PREVIOUS</span>
       </a>
       <span class="d-flex flex-fill justify-content-center align-items-center" v-html="walkthroughText[step]"></span>
-      <a class="d-flex align-items-center justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default" @click="step++">
+      <a class="d-flex align-items-center justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-default" @click="changeStep(1)">
        <span>NEXT</span>
        <i class="fas mod fa-chevron-right padding-left-5"></i>
       </a>
@@ -200,9 +200,16 @@ export default {
             }
         }
     },
+    methods: {
+        changeStep: function (increase) {
+            console.log('changeStep',this.step);
+            this.step += increase;
+        }
+    },
     watch: {
-        'step': function (value) {
+        step: function (value) {
             //var sliderDbl = document.getElementById('sliderDbl');
+            console.log('watch step',this.step);
             const vm = this;
             if (value === 1) {
                 //input search term
