@@ -143,3 +143,8 @@ body #__nuxt .page .border-none {
     border-width: 1px;
     border-style: solid;
 }
+
+.flex-column {
+    -ms-flex-direction: column;
+    flex-direction: column;
+}

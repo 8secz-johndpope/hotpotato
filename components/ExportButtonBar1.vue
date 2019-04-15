@@ -1,6 +1,7 @@
 <template>
-    <div class="row vertical-padding-15">
-        <div class="col-md-6 col-md-offset-3 play-buttons" style="">
+    <div class="container">
+    <div class="row vertical-padding-15 d-flex align-items-center flex-column">
+        <div class="col-xs-12 col-sm-offset-1 col-md-offset-0 col-sm-10 col-md-7 col-lg-6 play-buttons" style="">
             <button type="button" class="btn btn-default bg-dark position-absolute z-index-1"
                     id="playPauseButton" onclick="playPauseVideo();">
                 <span class="glyphicon glyphicon-play" id="playPauseSpan" aria-hidden="true"> </span>
@@ -12,11 +13,12 @@
                 <span> Restart</span>
             </button>
         </div>
-        <div class="col-md-6 col-md-offset-3" style="">
+        <div class="col-xs-12 col-sm-offset-1 col-md-offset-0 col-sm-10 col-md-7 col-lg-6 " style="">
             <input class="well " readonly="readonly" style="color:#000"
                    id="OutputYouTubeLink"
                    value="hotpotato.me/watch?">
         </div>
+    </div>
     </div>
 </template>
 

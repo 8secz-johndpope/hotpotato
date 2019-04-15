@@ -25,7 +25,7 @@
        <i class="fas mod fa-chevron-left"></i>
        <span class="padding-left-5">PREVIOUS</span>
       </a>
-      <span class="d-flex flex-fill justify-content-center" v-html="walkthroughText[step]"></span>
+      <span class="d-flex flex-fill justify-content-center align-items-center" v-html="walkthroughText[step]"></span>
       <a class=" justify-content-center horizontal-padding-15 horizontal-margin-15 btn btn-warning" @click="step++">
        <span>NEXT</span>
        <i class="fas mod fa-chevron-right padding-left-5"></i>
@@ -33,7 +33,7 @@
      </div>
      </div>
      </div>
-      <div class="padding-top-30 start">
+      <div class=" start" :class="( step < 3 ) ? 'padding-top-30' : 'padding-top-15' ">
        <InputBar :class="( step < 3 ) ? '' : 'hidden'" :enable="false"></InputBar>
        <DataWatch v-if="( step > 2 )"></DataWatch>
 
@@ -48,11 +48,13 @@
         <!--</button>-->
        </div>
       </div>
+    <div class="play-block" :class="'step-'+step">
+     <ExportButtonBar1 v-if=" step > 7"></ExportButtonBar1>
+     <ExportButtonBar2 v-if="step > 7"></ExportButtonBar2>
+    <VideoPlayerAndSidebar v-if="step > 2"></VideoPlayerAndSidebar>
            <EditButtonBarOne v-if="step > 2 && step < 8"></EditButtonBarOne>
            <EditButtonBarTwo v-if="step > 2 && step < 8"></EditButtonBarTwo>
-    <VideoPlayerAndSidebar v-if="step > 2"></VideoPlayerAndSidebar>
-           <ExportButtonBar1 v-if=" step > 7"></ExportButtonBar1>
-           <ExportButtonBar2 v-if="step > 7"></ExportButtonBar2>
+    </div>
     </div>
   </div>
   <div class="video-part vertical-padding-15 start" style="overflow-x: unset;">
@@ -158,7 +160,7 @@ export default {
         }
     },
     mounted: function () {
-
+        const vm = this;
         if (process.client) {
             $.getScript('partials/js/video-parse-link.js', function () {
                 console.log('ss scriot');
@@ -179,7 +181,9 @@ export default {
                 //     }
                 // });
             });
-
+            $('.play-block, .start').click(function () {
+                vm.step++;
+            });
             var url = window.location.toString();
             var value = url.indexOf('localhost');
             console.log('mounted',value, (value<0) );
@@ -235,9 +239,12 @@ export default {
                     firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag); // append the script to the DOM
                 }(document, 'script'));
                 setTimeout(function () {
-                    jwplayer("videoPlaybackFrame").seek(0);
+                    jwplayer("videoPlaybackFrame").seek(1);
                     //console.log('getPosition', jwplayer("videoPlaybackFrame").getPosition());
-                },1000);
+                },500);
+                setTimeout(function () {
+                    vm.step = 4;
+                },3000);
 
             } else if ( value === 4) {
                 //set edit start
@@ -252,12 +259,12 @@ export default {
                     //setTimeout(function () {
                     // sliderVal = (values[handle]/100)*vidDuration;
                     // jwplayer("videoPlaybackFrame").seek(sliderVal);
-                    // $('.noUi-handle.noUi-handle-lower .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
-                    //     console.log('listender',e.currentTarget);
-                    //     if (value === 4) {
-                    //         vm.step = 5;
-                    //     }
-                    // });
+                    $('.noUi-handle.noUi-handle-lower .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
+                        console.log('listender',e.currentTarget);
+                        if (value === 4) {
+                            vm.step = 5;
+                        }
+                    });
 
                 },500);
             } else if ( value === 5) {
@@ -274,12 +281,12 @@ export default {
                     videoOutPoint('slider',outPoint[currentCut]);
                     userEditCounter = 4;
                     videoLoadSwitch=5;
-                    // $('.noUi-handle.noUi-handle-upper .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
-                    //     console.log('listender',e.currentTarget);
-                    //     if (value === 5) {
-                    //         vm.step = 6;
-                    //     }
-                    // });
+                    $('.noUi-handle.noUi-handle-upper .noUi-touch-area').on('click dragend dragexit dragleave', function (e) {
+                        console.log('listender',e.currentTarget);
+                        if (value === 5) {
+                            vm.step = 6;
+                        }
+                    });
                 }, 500);
 
             } else if ( value === 6) {
@@ -290,13 +297,14 @@ export default {
                     // slider.style.display = '';
                     // sliderDbl.noUiSlider.set([30,null]);
                     var ButtonPos = $('#addEdit').offset().top;
-                    $("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
+                    //$("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
                 },450);
             } else if ( value === 7 ) {
                 //submit edit
+                this.progress = 2;
                 setTimeout(function () {
                     var ButtonPos = $('#submitEdit').offset().top;
-                    $("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
+                    //$("html, body").animate({scrollTop: (ButtonPos - 100) }, "slow");
                     //var slider = document.getElementById('slider');
                     //slider.style.display = '';
                     //sliderDbl.noUiSlider.set([30,null]);

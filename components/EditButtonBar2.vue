@@ -1,9 +1,10 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3" style="padding-top: 1%;">
                 <div class="progress-bar progress-bar-warning progress-bar-striped active" id="outputLoadingBar" role="progressbar" style="width:100%;display:none">EXPORTING</div>
-            </div></div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">

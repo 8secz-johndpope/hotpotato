@@ -48,16 +48,18 @@
                 <!--</li>-->
                 <li role="presentation" class="presentation">
                     <a class="menu-link horizontal-padding-15" href="edit.html"
-                       data-href="edit">Edit
+                       data-href="edit" >Edit
                     </a>
                 </li>
                 <li role="presentation" class="presentation">
                     <a class="menu-link" href="about.html"
-                       data-href="about">About
+                       data-href="about" >About
                     </a>
                 </li>
                 <li role="presentation" class="presentation contact hidden">
-                    <a type="button" class="link menu-link" onclick="void(0);" data-toggle="modal" data-target="#contactModal">
+                    <a type="button" class="link menu-link" onclick="void(0);"
+                       tabindex="0"
+                       data-toggle="modal" data-target="#contactModal">
                         Contact
                     </a>
                 </li>

@@ -1,5 +1,5 @@
 <template>
-    <div class="slider-area vertical-padding-10" id="videoTimeline" style="">
+    <div class="slider-area" id="videoTimeline" style="">
         <div id="sliderDbl"></div>
         <div id="slider" style="display: none;"></div>
     </div>

@@ -1,6 +1,7 @@
 <template>
-    <div class ="row" >
-        <div class="col-md-6 col-md-offset-3" style="" id="outputButtons">
+    <div class="container">
+    <div class="row d-flex justify-content-center" >
+        <div class="col-xs-12 col-sm-offset-1 col-md-offset-0 col-sm-10 col-md-7 col-lg-6 " style="" id="outputButtons">
             <button type="button" class="btn btn-default bg-dark" id="copy-button">
                 <span class="glyphicon glyphicon-link" aria-hidden="true"> </span><span id="copy-button-text">Copy Link</span></button>
             <a type="button" class="btn btn-default bg-dark" name="openLink" id="openLink" href="#">
@@ -34,6 +35,7 @@
             </a>
 
         </div>
+    </div>
     </div>
 </template>
 

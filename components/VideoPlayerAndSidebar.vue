@@ -77,10 +77,11 @@
         cursor: pointer;
     }
     .clips tr p {
-        margin: 7px auto;
+        margin: 15px auto;
     }
     .clips tr.active {
         color: #101010;
+        background-color: white;
     }
     .clips-section {
         /*width: 270px;*/

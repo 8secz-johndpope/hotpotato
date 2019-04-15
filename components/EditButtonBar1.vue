@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-default bg-dark" id="videoInPoint"
                         onclick="videoInPoint()" data-toggle="tooltip"
                         data-placement="top" data-delay="400" title="Begin your edit"
-                        disabled>
+                        >
                     <img src="css/scissors-open-white.png" class="whiteImage" width="15.1" height="14">
                     <img src="css/scissors-open-black.png" class="blackImage" width="15.1" height="14">
                     <span> START</span>

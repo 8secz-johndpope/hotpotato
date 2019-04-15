@@ -66,11 +66,14 @@ sliderDbl.noUiSlider.on("start", function( values, handle ) {
 // When the slider value changes, update the input and span
 function sliderChange (values, handle) {
     var userEditCounterOld = userEditCounter;
-    //userEditCounter=-1;
+    userEditCounter=-1;
 
     handleVal = values[handle];
-    sliderVal = (values[handle]/100)*vidDuration;
-    if (jwplayer("videoPlaybackFrame").getState === 'playing' || jwplayer("videoPlaybackFrame").getState === 'paused' ) {
+    var sliderVal = (values[handle]/100)*vidDuration;
+    sliderVal = sliderVal.toPrecision(4);
+    //console.log('state',sliderVal,values[handle],values,handle);
+    if (jwplayer("videoPlaybackFrame").getState() === 'playing' || jwplayer("videoPlaybackFrame").getState() === 'paused' ) {
+        //console.log('check');
         jwplayer("videoPlaybackFrame").seek(sliderVal);
     } else {
         jwplayer("videoPlaybackFrame").play();
@@ -82,7 +85,7 @@ function sliderChange (values, handle) {
     }
     if ( handle ) {
         valueStop.value = values[handle];
-        inPoint[currentCut] = sliderVal;
+        //inPoint[currentCut] = sliderVal;
     } else {
         valueStart.value = values[handle];
     }
@@ -94,7 +97,7 @@ function sliderChange (values, handle) {
 function sliderDblChange (values, handle) {
     var userEditCounterOld = userEditCounter;
     //userEditCounter=-1;
-    sliderVal = (values[handle]/100)*vidDuration;
+    var sliderVal = (values[handle]/100)*vidDuration;
     jwplayer("videoPlaybackFrame").seek(sliderVal);
 
     if ( handle ) {
@@ -238,7 +241,7 @@ function videoInPoint(type, val){
     // document.getElementById("submitEdit").style.display="none";
     // document.getElementById("previewEdit").style.display="";
     document.getElementById('previewEdit').disabled=true;
-    document.getElementById("videoInPoint").disabled=false;
+    //document.getElementById("videoInPoint").disabled=false;
     document.getElementById("videoOutPoint").disabled=false;
     document.getElementById("addEdit").style.visibility="hidden";
 
@@ -263,7 +266,7 @@ function videoOutPoint(type, val){
         userEditCounter=4;
         videoLoadSwitch=5;
     }
-    console.log( outPoint[currentCut],inPoint[currentCut], 'userEditCounter',userEditCounter );
+    //console.log( outPoint[currentCut],inPoint[currentCut], 'userEditCounter',userEditCounter );
     var timeVal = (outPoint[currentCut]/vidDuration)*100;
     timeVal = timeVal.toPrecision(4);
     // slider.noUiSlider.set([ timeVal ]);
@@ -272,12 +275,15 @@ function videoOutPoint(type, val){
 
     document.getElementById("submitEdit").disabled=false;
     document.getElementById("previewEdit").disabled=false;
+    document.getElementById("videoInPoint").disabled=true;
+    document.getElementById("videoOutPoint").disabled=true;
     document.getElementById("previewEdit").style.visibility="";
     //document.getElementById("videoOutPoint").style.display="none";
     //document.getElementById("videoNoPoint").style.display="";
     document.getElementById("submitEdit").className = "btn btn-warning";
     document.getElementById("submitEdit").style.color="#000";
     document.getElementById("addEdit").style.visibility="";
+
     if ( currentCut > 0 ) {
         document.getElementById("playbackAllEdits").style.visibility="";
     }
@@ -355,7 +361,8 @@ jwplayer("videoPlaybackFrame").onTime(function (event){
         ProgressBarDuring = (realVal/vidDuration);
         ProgressBarDuring = ProgressBarDuring*100;
         ProgressBarDuring = ProgressBarDuring.toPrecision(6);
-        sliderDbl.noUiSlider.set([null,ProgressBarDuring]);
+        //sliderDbl.noUiSlider.set([null,ProgressBarDuring]);
+        slider.noUiSlider.set(ProgressBarDuring);
         // ProgressBarDuring = (realVal/vidDuration);
         // ProgressBarDuring = ProgressBarDuring*100;
         // ProgressBarDuring = ProgressBarDuring.toPrecision(4);
